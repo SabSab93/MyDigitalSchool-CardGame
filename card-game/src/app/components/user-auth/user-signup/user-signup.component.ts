@@ -34,11 +34,7 @@ export class UserSignUpComponent {
         this.router.navigate(['/home-card']);
       },
       error: (err) => {
-        if (err.error?.message === 'pseudo existant') {
-          this.errorMessage = 'Ce pseudo est déjà utilisé. Veuillez en choisir un autre.';
-        } else {
-          this.errorMessage = 'Erreur lors de l’inscription. Veuillez réessayer.';
-        }
+        this.errorMessage = 'Erreur lors de l’inscription. Veuillez réessayer.';
       }
     });
   }
