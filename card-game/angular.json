@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend-card": {
+    "card-game": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/frontend-card",
+            "outputPath": "dist/card-game",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "frontend-card:build:production"
+              "buildTarget": "card-game:build:production"
             },
             "development": {
-              "buildTarget": "frontend-card:build:development"
+              "buildTarget": "card-game:build:development"
             }
           },
           "defaultConfiguration": "development"
