@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ProfileModel } from '../types/profileModel-type';
+import { ProfileModel } from '../../types/profileModel-type';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
