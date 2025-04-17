@@ -1,39 +1,45 @@
-
-import { Component, OnInit, OnDestroy } from '@angular/core'; 
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Subscription } from 'rxjs';
-import { UserSignUpComponent } from './components/user-auth/user-signup/user-signup.component';
-import { UserSignInComponent } from './components/user-auth/user-signin/user-signin.component';
-import { UserSignUpService } from './services/user-signup.services';
-import { UserSignInService } from './services/user-signin.services';
-import { ProfileModel } from './types/profileModel-type';
-import { HomeAuthComponent } from './components/home/home-auth/home-auth.component';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faVolumeUp, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    UserSignUpComponent,
-    UserSignInComponent,
-    HomeAuthComponent
-],
-  templateUrl: './app.component.html'
+  imports: [CommonModule, RouterOutlet, FontAwesomeModule],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
   title = 'project-angular';
-  private userSubscription!: Subscription;
-  constructor(private userService: UserSignUpService) {}
-  ngOnInit(): void {
-    this.userSubscription = this.userService.user$.subscribe((user: ProfileModel | null) => {
-      if (user) {
-        console.log('Utilisateur connecté :', user);
-        // redirection vers home si besoin
-      }
-    });
+  isMuted = false;
+
+  private audio = new Audio('assets/audio/background.mp3');
+  private hasUserInteracted = false;
+
+  constructor(private faIconLibrary: FaIconLibrary) {
+    this.faIconLibrary.addIcons(faVolumeUp, faVolumeMute);
+    this.audio.loop = true;
+    this.audio.volume = 0.5;
+
+    // Vérifie si le format est supporté
+    console.log('Can play MP3?', this.audio.canPlayType('audio/mpeg')); // doit renvoyer 'probably' ou 'maybe'
   }
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
+
+  toggleSound(): void {
+    this.isMuted = !this.isMuted;
+    this.isMuted ? this.audio.pause() : this.audio.play();
+  }
+
+  // Démarre la musique après une première interaction utilisateur
+  @HostListener('document:click', ['$event'])
+  onUserInteraction(): void {
+    if (!this.hasUserInteracted) {
+      this.hasUserInteracted = true;
+      if (!this.isMuted && this.audio.paused) {
+        this.audio.play().catch(err => console.warn('Lecture audio bloquée :', err));
+      }
+    }
   }
 }
