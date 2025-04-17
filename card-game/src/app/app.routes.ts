@@ -1,6 +1,5 @@
 // app.routes.ts
 import { Routes } from '@angular/router';
-// import { HomeComponent } from './components/home/home.component';
 import { UserSignUpComponent } from './components/user-auth/user-signup/user-signup.component';
 import { UserSignInComponent } from './components/user-auth/user-signin/user-signin.component';
 
