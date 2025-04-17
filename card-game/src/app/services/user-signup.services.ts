@@ -10,15 +10,13 @@ export class UserSignUpService {
   private userSubject = new BehaviorSubject<ProfileModel | null>(null);
   user$ = this.userSubject.asObservable();
 
-  private baseUrl = 'http://localhost:3010/api'; // L'URL de ton API
+  private baseUrl = 'http://localhost:3010/api'; 
 
   constructor(private http: HttpClient) {}
 
-  // Méthode d'inscription
   signUp(user: ProfileModel): Observable<ProfileModel> {
     const { id, ...payload } = user;
 
-    // Créer le profil sans vérifier le pseudo ici
     return this.http.put<ProfileModel>(`${this.baseUrl}/profiles`, payload);
   }
 
