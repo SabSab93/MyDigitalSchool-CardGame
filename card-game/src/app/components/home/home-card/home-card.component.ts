@@ -27,7 +27,14 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     },
     {
       action: 'cards',
-      message: 'Vous avez choisi la gestion des cartes. Sélectionnez une option ci‑dessous.'
+      message: 'Vous avez choisi la gestion des cartes. Sélectionnez une option ci‑dessous.',
+      choices: [
+        { label: 'Visualiser la liste des cartes à disposition', action: 'viewCards' },
+        { label: 'Visualiser le détail de chaque carte', action: 'viewCardDetails' },
+        { label: 'Créer une nouvelle carte', action: 'createCard' },
+        { label: 'Modifier une carte existante', action: 'editCard' },
+        { label: 'Supprimer une carte', action: 'deleteCard' }
+      ]
     },
     {
       action: 'decks',
