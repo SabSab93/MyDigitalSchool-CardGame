@@ -1,1 +1,7 @@
-
+<form (ngSubmit)="onSubmit()" #signUpForm="ngForm">
+    <input type="text" [(ngModel)]="newUser.name" name="name" placeholder="Nom" required />
+    <input type="text" [(ngModel)]="newUser.login" name="login" placeholder="Identifiant" required />
+    <input type="password" [(ngModel)]="newUser.password" name="password" placeholder="Mot de passe" required />
+    <button type="submit">S'inscrire</button>
+  </form>
+  
