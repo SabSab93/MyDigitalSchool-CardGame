@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserSignUpService } from '../../../services/user-signup.services';
 import { ProfileModel } from '../../../types/profileModel-type';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class UserSignUpComponent {
 
   errorMessage: string | null = null;
 
-  constructor(private userInfoService: UserSignUpService) {}
+  constructor(private userInfoService: UserSignUpService, private router: Router) {}
 
   onSubmit() {
     this.errorMessage = null;
@@ -30,7 +31,7 @@ export class UserSignUpComponent {
     this.userInfoService.signUp(this.newUser).subscribe({
       next: (createdUser) => {
         console.log('Utilisateur créé :', createdUser);
-        //Redirection vers home
+        this.router.navigate(['/home-card']);
       },
       error: (err) => {
         if (err.error?.message === 'pseudo existant') {

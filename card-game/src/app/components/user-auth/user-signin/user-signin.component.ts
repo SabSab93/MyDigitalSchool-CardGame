@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserSignInService } from '../../../services/user-signin.services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'user-signin',
@@ -15,7 +16,7 @@ export class UserSignInComponent {
   password: string = '';
   errorMessage: string | null = null;
 
-  constructor(private signInService: UserSignInService) {}
+  constructor(private signInService: UserSignInService, private router: Router) {}
 
   onSubmit(): void {
     this.errorMessage = null;
@@ -23,7 +24,7 @@ export class UserSignInComponent {
     this.signInService.signIn(this.login, this.password).subscribe({
       next: (token) => {
         console.log('Connexion réussie. Token :', token);
-        // redirection ou autre logique après login
+        this.router.navigate(['/home-card']);
       },
       error: (err: any) => {
         this.errorMessage = err.message || 'Erreur de connexion.';
