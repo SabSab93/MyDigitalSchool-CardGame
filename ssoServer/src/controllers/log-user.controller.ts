@@ -14,7 +14,7 @@ export class LogUserController {
     public async login(@request() req: Request, @response() res: Response): Promise<void> {
         try {
             const token: string = await this.profileService.login(req.body.login, req.body.password);
-            res.status(200).send();
+            res.status(200).send({ token: `JWT ${token}` });
         } catch (error: any) {
             console.error('Error : ', error);
             res.status(500).send({ message: error.message });

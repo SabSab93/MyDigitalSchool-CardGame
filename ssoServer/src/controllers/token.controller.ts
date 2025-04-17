@@ -7,11 +7,12 @@ import {
 } from 'inversify-express-utils';
 
 import { ITokenService } from '../interfaces/services/token.service';
+import { JwtCheckerMiddleware } from '../implementations/middlewares/jwt-checker.middleware';
 import SERVICE_TYPES from '../interfaces/services/services.types';
 import { TOKEN_TYPE } from '../models/token-info.model';
 import { inject } from 'inversify';
 
-@controller('/api/token')
+@controller('/api/token', JwtCheckerMiddleware)
 export class TokenController {
     constructor(
     @inject(SERVICE_TYPES.TokenService)
