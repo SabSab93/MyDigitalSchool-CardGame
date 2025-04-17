@@ -94,7 +94,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   
     // Retour à l'étape précédente
     if (choice.action === 'back') {
-      this.current = this.steps[0]; // Retour à la première étape (ou à l'étape précédente)
+      this.current = this.steps[0];
       this.startTyping();
       return;
     }
