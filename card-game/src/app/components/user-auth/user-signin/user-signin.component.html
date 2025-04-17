@@ -1,0 +1,8 @@
+<form (ngSubmit)="onSubmit()" #signInForm="ngForm">
+    <input type="text" [(ngModel)]="login" name="login" placeholder="Identifiant" required />
+    <input type="password" [(ngModel)]="password" name="password" placeholder="Mot de passe" required />
+    <button type="submit">Se connecter</button>
+  </form>
+  
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  

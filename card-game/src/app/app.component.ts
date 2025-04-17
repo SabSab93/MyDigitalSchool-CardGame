@@ -1,9 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core'; 
 import { RouterOutlet } from '@angular/router';
-import { UserProfilComponent } from './components/user-auth/user-signup/user-signup.component';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+
+import { UserProfilComponent } from './components/user-auth/user-signup/user-signup.component';
+import { UserSignInComponent } from './components/user-auth/user-signin/user-signin.component';
+
 import { UserSignUpService } from './services/user-signup.services';
+import { UserSignInService } from './services/user-signin.services';
 import { ProfileModel } from './types/profileModel-type';
 
 @Component({
@@ -12,12 +16,14 @@ import { ProfileModel } from './types/profileModel-type';
   imports: [
     CommonModule,
     RouterOutlet,
-    UserProfilComponent
+    UserProfilComponent,
+    UserSignInComponent 
   ],
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'project-angular';
+
   private userSubscription!: Subscription;
 
   constructor(private userService: UserSignUpService) {}
@@ -26,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userSubscription = this.userService.user$.subscribe((user: ProfileModel | null) => {
       if (user) {
         console.log('Utilisateur connecté :', user);
-        // redirection vers home
+        // redirection vers home si besoin
       }
     });
   }
