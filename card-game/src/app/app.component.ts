@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { UserProfilComponent } from './components/user-auth/user-signup/user-signup.component';
+import { UserSignUpComponent } from './components/user-auth/user-signup/user-signup.component';
 import { UserSignInComponent } from './components/user-auth/user-signin/user-signin.component';
 
 import { UserSignUpService } from './services/user-signup.services';
@@ -15,10 +15,8 @@ import { ProfileModel } from './types/profileModel-type';
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
-    UserProfilComponent,
-    UserSignInComponent 
-  ],
+    RouterOutlet
+],
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserSignUpService } from '../../../services/user-signup.services';
 import { ProfileModel } from '../../../types/profileModel-type';
-import { RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'user-signup',
@@ -12,7 +12,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './user-signup.component.html',
   styleUrls: ['./user-signup.component.scss']
 })
-export class UserProfilComponent {
+export class UserSignUpComponent {
   newUser: ProfileModel = {
     id: '',
     name: '',
