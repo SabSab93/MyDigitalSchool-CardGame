@@ -123,3 +123,12 @@
 .arrow {
   margin-right: 0.75rem;
 }
+.choices li.back {
+  color: #d81b60;  /* Couleur de texte différente */
+  font-weight: bold;  /* Mettre en gras pour le rendre plus visible */
+}
+
+.choices li.back:hover {
+
+  color: #c2185b;  /* Couleur du texte au survol */
+}

@@ -33,7 +33,8 @@ export class HomeCardComponent implements OnInit, OnDestroy {
         { label: 'Visualiser le détail de chaque carte', action: 'viewCardDetails' },
         { label: 'Créer une nouvelle carte', action: 'createCard' },
         { label: 'Modifier une carte existante', action: 'editCard' },
-        { label: 'Supprimer une carte', action: 'deleteCard' }
+        { label: 'Supprimer une carte', action: 'deleteCard' },
+        { label: 'Retour', action: 'back' }
       ]
     },
     {
@@ -90,6 +91,14 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/play']);
       return;
     }
+  
+    // Retour à l'étape précédente
+    if (choice.action === 'back') {
+      this.current = this.steps[0]; // Retour à la première étape (ou à l'étape précédente)
+      this.startTyping();
+      return;
+    }
+  
     // Change d’étape
     const next = this.steps.find(s => s.action === choice.action);
     if (next) {

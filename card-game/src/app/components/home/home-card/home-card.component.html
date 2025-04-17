@@ -15,7 +15,9 @@
   <div class="dialog-box">
     <p class="dialog-text">{{ displayedText }}</p>
     <ul class="choices" *ngIf="showChoices">
-      <li *ngFor="let choice of current.choices" (click)="choose(choice)">
+      <li *ngFor="let choice of current.choices" 
+          (click)="choose(choice)" 
+          [ngClass]="{'back': choice.label === 'Retour'}">
         <span class="arrow">➤</span>
         <span class="label">{{ choice.label }}</span>
       </li>
