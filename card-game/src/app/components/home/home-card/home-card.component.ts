@@ -1,6 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { ViewCardsComponent } from '../../cards/view-cards/view-cards.component';
+import { AppModalService } from '../../../services/modal/app-modal-service/app-modal.service';
 
 interface Step {
   message: string;
@@ -16,9 +18,12 @@ interface Step {
   styleUrls: ['./home-card.component.scss']
 })
 export class HomeCardComponent implements OnInit, OnDestroy {
+  @ViewChild('modalContainer', { read: ViewContainerRef, static: true })
+  modalHost!: ViewContainerRef;
+
   steps: Step[] = [
     {
-      message: 'Bienvenue dans le menu du jeu de bataille ! Que souhaitez‑vous faire ?',
+      message: 'Bienvenue dans le menu du jeu de bataille ! Que souhaitez‑vous faire ?',
       choices: [
         { label: 'Gestion des cartes', action: 'cards' },
         { label: 'Gestion des decks', action: 'decks' },
@@ -27,7 +32,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     },
     {
       action: 'cards',
-      message: 'Vous avez choisi la gestion des cartes. Sélectionnez une option ci‑dessous.',
+      message: 'Vous avez choisi la gestion des cartes. Sélectionnez une option ci-dessous.',
       choices: [
         { label: 'Visualiser la liste des cartes à disposition', action: 'viewCards' },
         { label: 'Visualiser le détail de chaque carte', action: 'viewCardDetails' },
@@ -39,12 +44,11 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     },
     {
       action: 'decks',
-      message: 'Vous avez choisi la gestion des decks. Sélectionnez une option ci‑dessous.'
+      message: 'Vous avez choisi la gestion des decks. Sélectionnez une option ci-dessous.'
     }
   ];
-  current: Step = this.steps[0];
 
-  // Pour l’effet “typewriter”
+  current: Step = this.steps[0];
   displayedText = '';
   private fullText = '';
   private charIndex = 0;
@@ -53,7 +57,10 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   private sound = new Audio('assets/audio/typewriter.mp3');
   private speed = 50; // ms entre chaque caractère
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private modalService: AppModalService
+  ) {}
 
   ngOnInit() {
     this.startTyping();
@@ -64,18 +71,15 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   }
 
   private startTyping() {
-    // Prépare
     this.fullText = this.current.message;
     this.displayedText = '';
     this.charIndex = 0;
     this.showChoices = false;
     clearInterval(this.intervalId);
 
-    // Lance l’intervalle
     this.intervalId = setInterval(() => {
       if (this.charIndex < this.fullText.length) {
         this.displayedText += this.fullText.charAt(this.charIndex);
-        // Lecture courte du son
         this.sound.currentTime = 0;
         this.sound.play().catch(() => {});
         this.charIndex++;
@@ -91,19 +95,26 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/play']);
       return;
     }
-  
-    // Retour à l'étape précédente
     if (choice.action === 'back') {
       this.current = this.steps[0];
       this.startTyping();
       return;
     }
-  
-    // Change d’étape
+    if (choice.action === 'viewCards') {
+      this.showModal(ViewCardsComponent);
+      return;
+    }
+    // … ajoute d’autres cas viewCardDetails, createCard, etc. …
     const next = this.steps.find(s => s.action === choice.action);
     if (next) {
       this.current = next;
       this.startTyping();
     }
+  }
+
+  private showModal(component: any) {
+    // Injecte directement le composant dans le ng-container
+    this.modalHost.clear();
+    this.modalService.openModal(this.modalHost, component);
   }
 }
