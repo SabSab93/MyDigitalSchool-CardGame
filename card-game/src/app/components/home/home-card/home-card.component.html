@@ -1,4 +1,24 @@
-<div class="card-container">
-    <h1>Bienvenue dans le jeu de bataille !</h1>
-    <p>Prépare-toi pour un duel épique 🃏</p>
+<div class="home-card-container">
+  <div class="scene">
+    <!-- Fond en plein écran -->
+    <div class="background"></div>
+
+    <!-- Personnage qui glisse depuis la droite -->
+    <img
+      src='/assets/images/character_2.png'
+      alt="Personnage"
+      class="character"
+    />
   </div>
+
+  <!-- Dialogue en bas -->
+  <div class="dialog-box">
+    <p class="dialog-text">{{ displayedText }}</p>
+    <ul class="choices" *ngIf="showChoices">
+      <li *ngFor="let choice of current.choices" (click)="choose(choice)">
+        <span class="arrow">➤</span>
+        <span class="label">{{ choice.label }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,7 +1,125 @@
-.card-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 4rem;
-    font-family: Arial, sans-serif;
+:host {
+  display: block;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.home-card-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.scene {
+  position: relative;
+  flex: 1;
+  height: calc(100% - 150px);
+}
+
+/* Background plein écran */
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  background: url('/assets/images/background.png') center/cover no-repeat;
+  z-index: -1;
+}
+
+/* Personnage animé qui arrive de la droite, responsive avec un scale initial */
+.character {
+  position: absolute;
+  bottom: -5rem; // 👈 Tu peux jouer avec cette valeur
+  right: 2rem;
+  height: 70%;
+  transform: scale(1.5) translateX(100%);
+  animation: slideIn 1s ease-out forwards;
+
+
+  // 💬 Taille ajustable du personnage (agrandi ici à 1.5x)
+  height: 70%;
+  transform: scale(1.5) translateX(100%);
+  animation: slideIn 1s ease-out forwards;
+  transition: transform 0.3s ease;
+}
+
+/* Animation du slide du personnage */
+@keyframes slideIn {
+  from {
+    transform: scale(1.5) translateX(100%);
   }
+  to {
+    transform: scale(1.5) translateX(0);
+  }
+}
+
+/* Responsive pour écrans plus petits */
+@media (max-width: 768px) {
+  .character {
+    height: 50%;
+    right: 1rem;
+    transform: scale(1.2) translateX(100%);
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: scale(1.2) translateX(100%);
+    }
+    to {
+      transform: scale(1.2) translateX(0);
+    }
+  }
+}
+
+/* Boîte de dialogue en rose clair */
+.dialog-box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-family: 'Courier New', monospace;
+  background: rgba(255, 192, 203, 0.5); // 🌸 fond rose clair
+  padding: 1rem 2rem;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+}
+
+.dialog-text {
+  color: #333;
+  font-size: 1.2rem;
+  min-height: 3rem;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+}
+
+/* Liste des choix façon visual novel */
+.choices {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.choices li {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.choices li:hover {
+  background: rgba(255, 105, 180, 0.2); // léger rose vif au survol
+  color: #d81b60;
+}
+
+.arrow {
+  margin-right: 0.75rem;
+}
