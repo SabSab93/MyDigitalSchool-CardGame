@@ -37,4 +37,7 @@ export class CardService {
   updateCard(card: CardModel): Observable<CardModel> {
     return this.http.post<CardModel>(this.apiUrl, card);
   }
+  deleteCard(card: CardModel): Observable<CardModel> {
+    return this.http.post<CardModel>(this.apiUrl, card);
+  }
 }
