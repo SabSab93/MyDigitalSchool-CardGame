@@ -1,5 +1,7 @@
-<div class="modal-overlay" (click)="close.emit()"></div>
-<div class="modal-content">
-  <button class="close-btn" (click)="close.emit()">×</button>
-  <ng-container #modalContainer></ng-container>
+<div class="modal">
+  <div class="modal-overlay" (click)="close.emit()"></div>
+  <div class="modal-content">
+    <button class="close-btn" (click)="close.emit()">×</button>
+    <ng-container #modalContainer></ng-container>
+  </div>
 </div>

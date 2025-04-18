@@ -4,17 +4,17 @@ import { RouterModule } from '@angular/router';
 import { CardModel } from '../../../types/cardModel-type';
 import { CardService } from '../../../services/card/card.service';
 
-
 @Component({
   selector: 'app-view-cards',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './view-cards.component.html'
+  templateUrl: './view-cards.component.html',
+  styleUrls: ['./view-cards.component.scss']
 })
-
 export class ViewCardsComponent implements OnInit {
   cards: CardModel[] = [];
   currentIndex = 0;
+  selectedCard: CardModel | null = null;
 
   constructor(private cardService: CardService) {}
 
@@ -35,5 +35,9 @@ export class ViewCardsComponent implements OnInit {
     if (this.cards.length > 0) {
       this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
     }
+  }
+
+  selectCard(card: CardModel) {
+    this.selectedCard = card;
   }
 }

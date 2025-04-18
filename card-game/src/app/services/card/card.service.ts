@@ -5,7 +5,7 @@ import { CardModel } from '../../types/cardModel-type';
 
 @Injectable({ providedIn: 'root' })
 export class CardService {
-  private apiUrl = 'http://localhost:3010/api/cards';
+  private apiUrl = 'http://localhost:3000/api/cards';
 
   constructor(private http: HttpClient) {}
 

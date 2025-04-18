@@ -1,12 +1,19 @@
-<div class="dialog-box">
-  <p class="dialog-text">Voici les cartes disponibles :</p>
-  <ul class="choices">
-    <li *ngFor="let card of cards">
-      <span class="arrow">➤</span>
-      <span class="label">{{ card.name }} — Valeur : {{ card.value }}</span>
-    </li>
-  </ul>
+<p class="dialog-text">Voici les cartes disponibles :</p>
+
+<ul class="choices">
+  <li
+    *ngFor="let card of cards"
+    (click)="selectCard(card)"
+    [class.selected]="card.id === selectedCard?.id"
+  >
+    <span class="arrow">➤</span>
+    <span class="label">{{ card.name }} — Valeur : {{ card.value }}</span>
+  </li>
+</ul>
+
+<div *ngIf="selectedCard" class="card-image">
+  <img
+    [src]="'/assets/cards/' + selectedCard.name.toLowerCase() + '.png'"
+    [alt]="selectedCard.name"
+  />
 </div>
-<ng-template [ngIf]="cards.length === 0">
-  <p class="dialog-text">Aucune carte disponible.</p>
-</ng-template>
