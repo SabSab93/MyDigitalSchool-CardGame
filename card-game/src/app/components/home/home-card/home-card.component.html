@@ -1,4 +1,33 @@
-<div class="card-container">
-    <h1>Bienvenue dans le jeu de bataille !</h1>
-    <p>Prépare-toi pour un duel épique 🃏</p>
+<div class="home-card-container">
+
+  <div class="scene">
+    <div class="background"></div>
+    <img
+      src="/assets/images/character_2.png"
+      alt="Personnage"
+      class="character"
+    />
   </div>
+
+  <!-- Boîte de dialogue (rose clair) -->
+  <div class="dialog-box" *ngIf="!isModalVisible">
+    <p class="dialog-text">{{ displayedText }}</p>
+    <ul class="choices" *ngIf="showChoices">
+      <li
+        *ngFor="let choice of current.choices"
+        (click)="choose(choice)"
+        [ngClass]="{ back: choice.label === 'Retour' }"
+      >
+        <span class="arrow">➤</span>
+        <span class="label">{{ choice.label }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Modal, même style que .dialog-box -->
+<app-modal
+  *ngIf="isModalVisible"
+  (close)="closeModal()"
+  class="dialog-box"
+></app-modal>
+</div>

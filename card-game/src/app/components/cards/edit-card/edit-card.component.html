@@ -1,0 +1,55 @@
+<div class="view-cards-container">
+  <!-- Colonne de gauche : la liste cliquable -->
+  <div class="list-container">
+    <p class="dialog-text">Sélectionnez une carte à modifier :</p>
+    <ul class="choices">
+      <li
+        *ngFor="let card of cards"
+        (click)="selectCard(card)"
+        [class.selected]="card.id === selectedCard?.id"
+      >
+        <span class="arrow">➤</span>
+        <span class="label">{{ card.name }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Colonne de droite : formulaire + aperçu -->
+  <div class="preview-container" *ngIf="selectedCard">
+    <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
+      <div class="form-group">
+        <label>Nom de la carte</label>
+        <input
+          name="name"
+          required
+          [(ngModel)]="selectedCard.name"
+        />
+      </div>
+      <div class="form-group">
+        <label>Valeur</label>
+        <input
+          name="value"
+          type="number"
+          required
+          [(ngModel)]="selectedCard.value"
+        />
+      </div>
+      <button type="submit" [disabled]="!editForm.form.valid">
+        Enregistrer
+      </button>
+    </form>
+
+
+<!-- === Le modal s'affiche uniquement APRÈS la mise à jour === -->
+<app-show-card
+  *ngIf="isModalVisible && isCardUpdated && selectedCard"
+  [selectedCard]="selectedCard"
+  [selectedDescription]="selectedDescription"
+  (click)="closeModal()"
+  class="card-modal"
+/>
+<div
+  class="modal-overlay"
+  *ngIf="isModalVisible && isCardUpdated"
+  (click)="closeModal()"
+></div>

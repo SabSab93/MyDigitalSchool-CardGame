@@ -12,9 +12,9 @@ import { RouterModule, Router } from '@angular/router';
 export class HomeAuthComponent {
   constructor(private router: Router) {}
   goToSignUp() {
-    this.router.navigate(['/signup']);
+    this.router.navigate(['/register']);
   }
   goToSignIn() {
-    this.router.navigate(['/signin']);
+    this.router.navigate(['/login']);
   }
 }

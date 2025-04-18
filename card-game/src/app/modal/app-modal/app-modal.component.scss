@@ -1,0 +1,42 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: flex-start;  // alignement à gauche
+  align-items: flex-start;      // alignement en haut
+  padding: 1rem;                // espace autour
+  z-index: 999;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+}
+.modal-content {
+  position: relative;
+  background: rgba(255, 192, 203, 0.8);
+  padding: 1rem 2rem;
+  font-family: 'Courier New', monospace;
+
+  /* Dimensions élargies */
+  width: 90vw;       // passe de 80 -> 90% de la fenêtre
+  max-width: 1200px; // tu peux augmenter si tu veux
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.8rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}

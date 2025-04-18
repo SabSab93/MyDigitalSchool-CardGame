@@ -1,0 +1,17 @@
+<div class="delete-modal card-modal">
+    <h2>Confirmé la suppression</h2>
+  
+    <!-- aperçu de la carte -->
+    <app-show-card
+      *ngIf="card"
+      [selectedCard]="card"
+      [selectedDescription]="'Voulez-vous réellement supprimer cette carte ?'"
+      (click)="$event.stopPropagation()"
+    ></app-show-card>
+  
+    <div class="buttons">
+      <button class="btn" (click)="cancel.emit()">Non</button>
+      <button class="btn" (click)="confirm.emit()">Oui</button>
+    </div>
+  </div>
+  
