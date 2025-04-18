@@ -5,6 +5,10 @@
         <li *ngFor="let deck of decks" (click)="selectDeck(deck)">
           <span class="arrow">➤</span>
           <span class="label">{{ deck.name }}</span>
+          <div class="stats">
+            Cartes : {{ deck.cards.length }}/5 |
+            Valeur : {{ getTotalValue(deck) }}/30
+          </div>
         </li>
       </ul>
     </div>

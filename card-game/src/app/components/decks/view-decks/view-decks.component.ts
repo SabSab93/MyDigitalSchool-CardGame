@@ -33,5 +33,7 @@ export class ViewDeckComponent implements OnInit {
   closeModal() {
     this.selectedDeck = null;
   }
-
+  getTotalValue(deck: DeckWithCardsModel): number {
+    return deck.cards.reduce((acc, card) => acc + card.value, 0);
+  }
 }

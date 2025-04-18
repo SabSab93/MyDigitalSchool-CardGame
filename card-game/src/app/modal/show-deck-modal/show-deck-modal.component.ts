@@ -40,5 +40,7 @@ export class ShowDeckModalComponent {
       }
     }
 
-    
+    getTotalValue(deck: DeckWithCardsModel): number {
+      return deck.cards.reduce((acc, c) => acc + c.value, 0);
+    }
 }
