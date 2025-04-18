@@ -13,6 +13,7 @@ import { AppModalComponent } from '../../../modal/app-modal/app-modal.component'
 import { AppModalService } from '../../../services/modal/app-modal-service/app-modal.service';
 import { CreateCardComponent } from '../../cards/create-card/create-card.component';
 import { EditCardComponent } from '../../cards/edit-card/edit-card.component';
+import { DeleteCardComponent } from '../../cards/delete-card/delete-card.component';
 
 interface Step {
   message: string;
@@ -120,7 +121,10 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       this.openModal(EditCardComponent);
       return;
     }
-
+    if (choice.action === 'deleteCard') {
+      this.openModal(DeleteCardComponent);
+      return;
+    }
     
 
     const next = this.steps.find(s => s.action === choice.action);

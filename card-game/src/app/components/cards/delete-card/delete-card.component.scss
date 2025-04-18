@@ -1,0 +1,18 @@
+.delete-cards-container {
+    .choices {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .choices li {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-bottom: 1px solid #eee;
+      transition: background 0.2s;
+    }
+    .choices li:hover,
+    .choices li.selected {
+      background: rgba(216, 27, 96, 0.1);
+    }
+  }
+  

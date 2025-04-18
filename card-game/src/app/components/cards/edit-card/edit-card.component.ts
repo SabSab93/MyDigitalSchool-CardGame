@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CardModel } from '../../../types/cardModel-type';
 import { CardService } from '../../../services/card/card.service';
-import { ShowCardComponent } from '../../../modal/show-card/show-card.component';
+import { ShowCardComponent } from '../../../modal/show-card-modal/show-card.component';
 
 @Component({
   selector: 'app-edit-card',
