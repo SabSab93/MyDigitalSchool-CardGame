@@ -10,12 +10,12 @@
   </div>
 
   <!-- Boîte de dialogue (rose clair) -->
-  <div class="dialog-box" *ngIf="!isModalVisible">
+  <div class="dialog-box" *ngIf="!isModalVisible" (click)="onTextClick()">
     <p class="dialog-text">{{ displayedText }}</p>
     <ul class="choices" *ngIf="showChoices">
       <li
         *ngFor="let choice of current.choices"
-        (click)="choose(choice)"
+        (click)="choose(choice); $event.stopPropagation()"
         [ngClass]="{ back: choice.label === 'Retour' }"
       >
         <span class="arrow">➤</span>
@@ -25,9 +25,9 @@
   </div>
 
   <!-- Modal, même style que .dialog-box -->
-<app-modal
-  *ngIf="isModalVisible"
-  (close)="closeModal()"
-  class="dialog-box"
-></app-modal>
+  <app-modal
+    *ngIf="isModalVisible"
+    (close)="closeModal()"
+    class="dialog-box"
+  ></app-modal>
 </div>
