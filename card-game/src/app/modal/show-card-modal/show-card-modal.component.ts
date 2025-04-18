@@ -6,8 +6,8 @@ import { CardModel } from '../../types/cardModel-type';
   selector: 'app-show-card',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './show-card.component.html',
-  styleUrls: ['./show-card.component.scss']
+  templateUrl: './show-card-modal.component.html',
+  styleUrls: ['./show-card-modal.component.scss']
 })
 export class ShowCardComponent {
   @Input() selectedCard: CardModel | null = null;

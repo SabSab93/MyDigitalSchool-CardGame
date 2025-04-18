@@ -1,0 +1,27 @@
+<div class="show-deck-modal card-modal" (click)="close.emit()">
+  <h2>Deck : {{ deck.name }}</h2>
+  <p class="deck-stats">
+    Cartes : {{ deck.cards.length }}/5 | Valeur : {{ getTotalValue(deck) }}/30
+  </p>
+  
+    <!-- Carrousel avec carte affichée -->
+<!-- Affiche la carte si au moins une existe -->
+    <app-show-card
+    *ngIf="hasCards"
+    [selectedCard]="deck.cards[currentIndex]"
+    [selectedDescription]="'Carte ' + (currentIndex + 1) + ' sur ' + deck.cards.length"
+    (click)="$event.stopPropagation()"
+    ></app-show-card>
+
+    <!-- Affiche les boutons de navigation si plusieurs cartes -->
+    <div class="buttons" *ngIf="hasMultipleCards">
+    <button class="btn" (click)="prevCard(); $event.stopPropagation()">◀ Précédente</button>
+    <button class="btn" (click)="nextCard(); $event.stopPropagation()">Suivante ▶</button>
+    </div>
+
+  
+    <div class="buttons">
+      <button class="btn" (click)="close.emit(); $event.stopPropagation()">Fermer</button>
+    </div>
+  </div>
+  

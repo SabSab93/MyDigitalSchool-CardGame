@@ -15,6 +15,7 @@ import { AppModalService } from '../../../services/modal/app-modal-service/app-m
 import { CreateCardComponent } from '../../cards/create-card/create-card.component';
 import { EditCardComponent } from '../../cards/edit-card/edit-card.component';
 import { DeleteCardComponent } from '../../cards/delete-card/delete-card.component';
+import { ViewDeckComponent } from '../../decks/view-decks/view-decks.component';
 
 interface Step {
   message: string;
@@ -58,7 +59,14 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     },
     {
       action: 'decks',
-      message: 'Vous avez choisi la gestion des decks. Sélectionnez une option ci-dessous.'
+      message: 'Vous avez choisi la gestion des decks. Sélectionnez une option ci-dessous.',
+      choices: [
+        { label: 'Visualiser la liste des decks à disposition', action: 'viewDecks' },
+        { label: 'Créer un nouveau deck', action: 'createDeck' },
+        { label: 'Modifier un deck existant', action: 'editDeck' },
+        { label: 'Supprimer un deck', action: 'deleteDeck' },
+        { label: 'Retour', action: 'back' }
+      ]
     }
   ];
 
@@ -129,6 +137,10 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       this.openModal(DeleteCardComponent);
       return;
     }
+    if (choice.action === 'viewDecks') {
+      this.openModal(ViewDeckComponent);
+      return;
+    }
     
 
     const next = this.steps.find(s => s.action === choice.action);
@@ -158,6 +170,8 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     this.displayedText = this.current.message;
     this.showChoices = true;
   }
+
+    // a voir si je supprime apres
   @HostListener('document:click', ['$event'])
   onAnywhereClick(event: MouseEvent) {
     this.onTextClick();
