@@ -53,36 +53,3 @@
   color: #d81b60;
   font-weight: bold;
 }
-
-.preview-container {
-  flex-shrink: 0;
-  width: 300px; 
-  text-align: center;
-
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    margin-bottom: 1rem;
-  }
-}
-
-/* ===== zone de description sous l’image ===== */
-.description-box {
-  padding: 0.75rem;
-  border: 2px solid #d81b60;   /* bord rose épais */
-  border-radius: 8px;           /* coins arrondis */
-  background: rgba(255, 192, 203, 0.2);
-  font-family: 'Courier New', monospace;
-  font-weight: bold;            /* texte en gras */
-  color: #333;
-  min-height: 3rem;
-  line-height: 0.2;             /* réduit l'espacement entre les lignes */
-  margin: 0;
-}
-.card-desc {
-  margin: 0;           /* Pas de marge sous la description */
-  font-size: 1rem;
-  line-height: 1.2;     /* Espacement réduit pour la description */
-}

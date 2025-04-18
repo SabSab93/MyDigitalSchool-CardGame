@@ -16,19 +16,11 @@
     </ul>
   </div>
 
-  <!-- Colonne de droite : image + zone de texte -->
-  <div class="preview-container" *ngIf="selectedCard">
-    <img
-    [src]="'/assets/images/cards/card_' + selectedCard.value + '.png'"
-      [alt]="selectedCard.name"
-    />
-
-    <div class="description-box">
-      <h3 class="card-name">{{ selectedCard.name }}</h3>
-      <p class="card-value"><strong>Valeur :</strong> {{ selectedCard.value }}</p>
-      <p class="card-desc">{{ selectedDescription }}</p>
-    </div>
-  </div>
+  <app-show-card
+    *ngIf="selectedCard"
+    [selectedCard]="selectedCard"
+    [selectedDescription]="selectedDescription"
+  />
 </div>
 
 
