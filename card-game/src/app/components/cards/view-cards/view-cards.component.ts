@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CardModel } from '../../../types/cardModel-type';
 import { CardService } from '../../../services/card/card.service';
+import { ShowCardComponent } from '../../../modal/show-card-modal/show-card.component';
 
 @Component({
   selector: 'app-view-cards',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,ShowCardComponent],
   templateUrl: './view-cards.component.html',
   styleUrls: ['./view-cards.component.scss']
 })
