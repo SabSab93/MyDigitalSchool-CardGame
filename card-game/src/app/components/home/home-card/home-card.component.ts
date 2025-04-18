@@ -4,7 +4,8 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
-  Type
+  Type,
+  HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -61,6 +62,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     }
   ];
 
+  isTyping = false;
   current: Step = this.steps[0];
   displayedText = '';
   private fullText = '';
@@ -87,6 +89,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     this.displayedText = '';
     this.charIndex = 0;
     this.showChoices = false;
+    this.isTyping = true;
     clearInterval(this.intervalId);
 
     this.intervalId = setInterval(() => {
@@ -97,6 +100,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
         this.charIndex++;
       } else {
         clearInterval(this.intervalId);
+        this.isTyping = false;
         this.showChoices = !!this.current.choices;
       }
     }, this.speed);
@@ -154,4 +158,18 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     this.displayedText = this.current.message;
     this.showChoices = true;
   }
+  @HostListener('document:click', ['$event'])
+  onAnywhereClick(event: MouseEvent) {
+    this.onTextClick();
+  }
+
+  onTextClick() {
+    if (this.isTyping) {
+      clearInterval(this.intervalId);
+      this.displayedText = this.fullText;
+      this.isTyping = false;
+      this.showChoices = !!this.current.choices;
+    }
+  }
+
 }
