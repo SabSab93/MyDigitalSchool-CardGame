@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { ViewCardsComponent } from '../../cards/view-cards/view-cards.component';
 import { AppModalComponent } from '../../../modal/app-modal/app-modal.component';
 import { AppModalService } from '../../../services/modal/app-modal-service/app-modal.service';
+import { CreateCardComponent } from '../../cards/create-card/create-card.component';
 import { EditCardComponent } from '../../cards/edit-card/edit-card.component';
 
 interface Step {
@@ -112,6 +113,10 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       return;
     }
     if (choice.action === 'createCard') {
+      this.openModal(CreateCardComponent);
+      return;
+    }
+    if (choice.action === 'editCard') {
       this.openModal(EditCardComponent);
       return;
     }

@@ -15,14 +15,12 @@
 .modal-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.3);
 }
 .modal-content {
   position: relative;
-  background: rgba(255, 192, 203, 0.5);
+  background: rgba(255, 192, 203, 0.8);
   padding: 1rem 2rem;
   font-family: 'Courier New', monospace;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
 
   /* Dimensions élargies */
   width: 90vw;       // passe de 80 -> 90% de la fenêtre
@@ -36,7 +34,7 @@
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   background: transparent;
   border: none;
   cursor: pointer;
