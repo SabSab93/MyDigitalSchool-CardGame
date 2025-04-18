@@ -1,3 +1,12 @@
-<div class="view-cards-container">
-    <h1>{{ message }}</h1>
-  </div>
+<div class="dialog-box">
+  <p class="dialog-text">Voici les cartes disponibles :</p>
+  <ul class="choices">
+    <li *ngFor="let card of cards">
+      <span class="arrow">➤</span>
+      <span class="label">{{ card.name }} — Valeur : {{ card.value }}</span>
+    </li>
+  </ul>
+</div>
+<ng-template [ngIf]="cards.length === 0">
+  <p class="dialog-text">Aucune carte disponible.</p>
+</ng-template>

@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentRef,
+  EventEmitter,
+  Output,
+  ViewChild,
+  ViewContainerRef,
+  Type,
+} from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -7,6 +15,12 @@ import { Component, EventEmitter, Output, ViewChild, ViewContainerRef } from '@a
 })
 export class AppModalComponent {
   @Output() close = new EventEmitter<void>();
-  @ViewChild('modalContainer', { read: ViewContainerRef, static: false })
-  modalContainer!: ViewContainerRef;;
+
+  @ViewChild('modalContainer', { read: ViewContainerRef, static: true })
+  modalContainer!: ViewContainerRef;
+
+  loadComponent(component: Type<any>) {
+    this.modalContainer.clear();
+    this.modalContainer.createComponent(component);
+  }
 }

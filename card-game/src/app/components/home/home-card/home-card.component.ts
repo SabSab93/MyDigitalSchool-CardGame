@@ -3,10 +3,11 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
+  Type
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ViewCardsComponent } from '../../cards/view-cards/view-cards.component';
 import { AppModalComponent } from '../../../modal/app-modal/app-modal.component';
 import { AppModalService } from '../../../services/modal/app-modal-service/app-modal.service';
@@ -25,10 +26,11 @@ interface Step {
   styleUrls: ['./home-card.component.scss']
 })
 export class HomeCardComponent implements OnInit, OnDestroy {
-  @ViewChild(AppModalComponent, { static: true })
+  @ViewChild(AppModalComponent)
   modalComponent!: AppModalComponent;
 
   isModalVisible = false;
+  componentToLoad: Type<any> | null = null;
 
   steps: Step[] = [
     {
@@ -67,7 +69,6 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   private speed = 50;
 
   constructor(
-    private router: Router,
     private modalService: AppModalService
   ) {}
 
@@ -100,22 +101,17 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   }
 
   choose(choice: { label: string; action: string }) {
-    // Retour
     if (choice.action === 'back') {
       this.current = this.steps[0];
       this.startTyping();
       return;
     }
 
-    // Modal pour "viewCards"
     if (choice.action === 'viewCards') {
       this.openModal(ViewCardsComponent);
       return;
     }
 
-    // … autres modals (viewCardDetails, createCard, etc.) …
-
-    // Changement d’étape par défaut
     const next = this.steps.find(s => s.action === choice.action);
     if (next) {
       this.current = next;
@@ -123,24 +119,23 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openModal(component: any) {
+  openModal(component: Type<any>) {
+    this.componentToLoad = component;
     this.isModalVisible = true;
-    // on attend un tick pour que <app-modal> soit en DOM
+
     setTimeout(() => {
-      const host: ViewContainerRef = this.modalComponent.modalContainer;
-      host.clear();
-      this.modalService.openModal(host, component);
+      if (this.modalComponent && this.modalComponent.modalContainer) {
+        const host: ViewContainerRef = this.modalComponent.modalContainer;
+        host.clear();
+        this.modalService.openModal(host, component);
+      }
     });
   }
 
-
   closeModal() {
-    // 1) vider le conteneur
     this.modalComponent.modalContainer.clear();
-    // 2) masquer le modal
     this.isModalVisible = false;
-
-    // 3) réafficher le message + choix de l'étape courante
+    this.componentToLoad = null;
     this.displayedText = this.current.message;
     this.showChoices = true;
   }

@@ -1,0 +1,41 @@
+.dialog-box {
+  position: relative;
+  width: 100%;
+  font-family: 'Courier New', monospace;
+  background: rgba(255, 192, 203, 0.5); // 🌸 fond rose clair
+  padding: 1rem 2rem;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+}
+
+.dialog-text {
+  color: #333;
+  font-size: 1.2rem;
+  min-height: 3rem;
+  white-space: pre-wrap;
+}
+
+.choices {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.choices li {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: #333;
+  cursor: default;
+  padding: 0.3rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.arrow {
+  margin-right: 0.5rem;
+  color: #d81b60;
+}

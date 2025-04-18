@@ -25,12 +25,9 @@
   </div>
 
   <!-- Modal, même style que .dialog-box -->
-  <app-modal
-    *ngIf="isModalVisible"
-    (close)="closeModal()"
-    class="dialog-box"
-  >
-    <ng-container #modalContainer></ng-container>
-  </app-modal>
-
+<app-modal
+  *ngIf="isModalVisible"
+  (close)="closeModal()"
+  class="dialog-box"
+></app-modal>
 </div>
