@@ -19,7 +19,7 @@
   <!-- Colonne de droite : image + zone de texte -->
   <div class="preview-container" *ngIf="selectedCard">
     <img
-      [src]="'/assets/images/cat_card.png'"
+    [src]="'/assets/images/cards/card_' + selectedCard.value + '.png'"
       [alt]="selectedCard.name"
     />
 
