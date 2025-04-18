@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CardModel } from '../../../types/cardModel-type';
 import { CardService } from '../../../services/card/card.service';
-import { ShowCardComponent } from '../../../modal/show-card-modal/show-card.component';
+import { ShowCardComponent } from '../../../modal/show-card-modal/show-card-modal.component';
 
 @Component({
   selector: 'app-create-card',

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardModel } from '../../types/cardModel-type';
-import { ShowCardComponent } from '../show-card-modal/show-card.component';
+import { ShowCardComponent } from '../show-card-modal/show-card-modal.component';
 
 @Component({
   selector: 'app-delete-modal',

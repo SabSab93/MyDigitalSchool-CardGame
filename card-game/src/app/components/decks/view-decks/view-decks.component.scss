@@ -1,0 +1,51 @@
+.view-decks-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+  
+  /* Colonne de gauche : liste */
+  .list-container {
+    flex: 1;
+  
+    .dialog-text {
+      color: #333;
+      font-size: 1.2rem;
+      font-family: 'Courier New', monospace;
+      margin-bottom: 1rem;
+    }
+  
+    .choices {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  
+    .choices li {
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
+      color: #333;
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      border-radius: 0.25rem;
+      transition: background 0.2s, color 0.2s;
+    }
+  
+    .choices li:hover {
+      background: rgba(255, 105, 180, 0.2);
+      color: #d81b60;
+    }
+  
+    .arrow {
+      margin-right: 0.75rem;
+    }
+  }
+  
