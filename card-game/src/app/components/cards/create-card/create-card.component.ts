@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CardModel } from '../../../types/cardModel-type';
 import { CardService } from '../../../services/card/card.service';
+import { ShowCardComponent } from '../../../modal/show-card-modal/show-card.component';
 
 @Component({
   selector: 'app-create-card',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ShowCardComponent],
   templateUrl: './create-card.component.html',
   styleUrls: ['./create-card.component.scss']
 })
