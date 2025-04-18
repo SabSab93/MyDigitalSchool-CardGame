@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { ViewCardsComponent } from '../../cards/view-cards/view-cards.component';
 import { AppModalComponent } from '../../../modal/app-modal/app-modal.component';
 import { AppModalService } from '../../../services/modal/app-modal-service/app-modal.service';
+import { EditCardComponent } from '../../cards/edit-card/edit-card.component';
 
 interface Step {
   message: string;
@@ -46,7 +47,6 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       message: 'Vous avez choisi la gestion des cartes. Sélectionnez une option ci-dessous.',
       choices: [
         { label: 'Visualiser la liste des cartes à disposition', action: 'viewCards' },
-        { label: 'Visualiser le détail de chaque carte', action: 'viewCardDetails' },
         { label: 'Créer une nouvelle carte', action: 'createCard' },
         { label: 'Modifier une carte existante', action: 'editCard' },
         { label: 'Supprimer une carte', action: 'deleteCard' },
@@ -111,6 +111,12 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       this.openModal(ViewCardsComponent);
       return;
     }
+    if (choice.action === 'createCard') {
+      this.openModal(EditCardComponent);
+      return;
+    }
+
+    
 
     const next = this.steps.find(s => s.action === choice.action);
     if (next) {

@@ -81,14 +81,15 @@
   bottom: 0;
   width: 100%;
   font-family: 'Courier New', monospace;
-  background: rgba(255, 192, 203, 0.5); // 🌸 fond rose clair
+  background: rgba(255, 192, 203, 0.8); // 🌸 fond rose clair
   padding: 1rem 2rem;
   box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
 }
 
 .dialog-text {
-  color: #333;
-  font-size: 1.2rem;
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight:800;
   min-height: 3rem;
   font-family: 'Courier New', monospace;
   white-space: pre-wrap;
@@ -107,7 +108,7 @@
 .choices li {
   display: flex;
   align-items: center;
-  font-size: 1.1rem;
+  font-size: 1.6rem;
   color: #333;
   cursor: pointer;
   transition: color 0.2s, background 0.2s;

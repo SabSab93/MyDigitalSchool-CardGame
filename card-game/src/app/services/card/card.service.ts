@@ -31,4 +31,7 @@ export class CardService {
       })
     );
   }
+  createCard(card: Partial<CardModel>): Observable<CardModel> {
+    return this.http.put<CardModel>(this.apiUrl, card);
+  }
 }
