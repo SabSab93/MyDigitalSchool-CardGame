@@ -1,51 +1,55 @@
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);  // Fond semi-transparent sombre
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  }
-  
-  .modal-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.3);  // Légère ombre sombre pour le fond
-  }
-  
-  .modal-content {
-    position: relative;
-    background: rgba(255, 192, 203, 0.5);  // Fond rose clair
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 100%;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
-    font-family: 'Courier New', monospace;  // Style du texte en monospace
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 1.5rem;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    color: #333;  // Couleur du bouton de fermeture
-  }
-  
-  .modal-content p {
-    color: #333;  // Texte de couleur sombre dans le modal
-    font-size: 1.2rem;  // Taille de police de 1.2rem
-    min-height: 3rem;
-    white-space: pre-wrap;  // Assurer que le texte se réajuste proprement
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);  // Fond semi-transparent sombre
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);  // Légère ombre sombre pour le fond
+}
+
+.modal-content {
+  position: relative;
+  background: rgba(255, 192, 203, 0.5);  // Fond rose clair
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+
+  width: 100vw;        // 80% de la largeur de la fenêtre
+  max-width: 1000px;  // au maximum 1000px
+  height: 80vh;       // 80% de la hauteur de la fenêtre
+  max-height: 900px;  // au maximum 900px
+
+  overflow: auto;     // Permet de défiler si le contenu dépasse
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+  font-family: 'Courier New', monospace;  // Style du texte en monospace
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: #333;  // Couleur du bouton de fermeture
+}
+
+.modal-content p {
+  color: #333;       // Texte de couleur sombre dans le modal
+  font-size: 1.2rem; // Taille de police de 1.2rem
+  min-height: 3rem;
+  white-space: pre-wrap;  // Assurer que le texte se réajuste proprement
+}

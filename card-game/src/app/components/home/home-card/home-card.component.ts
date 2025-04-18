@@ -1,7 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { ViewCardsComponent } from '../../cards/view-cards/view-cards.component';
+import { AppModalComponent } from '../../../modal/app-modal/app-modal.component';
 import { AppModalService } from '../../../services/modal/app-modal-service/app-modal.service';
 
 interface Step {
@@ -13,13 +20,15 @@ interface Step {
 @Component({
   selector: 'home-card',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, AppModalComponent],
   templateUrl: './home-card.component.html',
   styleUrls: ['./home-card.component.scss']
 })
 export class HomeCardComponent implements OnInit, OnDestroy {
-  @ViewChild('modalContainer', { read: ViewContainerRef, static: true })
-  modalHost!: ViewContainerRef;
+  @ViewChild(AppModalComponent, { static: true })
+  modalComponent!: AppModalComponent;
+
+  isModalVisible = false;
 
   steps: Step[] = [
     {
@@ -55,7 +64,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   private intervalId!: any;
   showChoices = false;
   private sound = new Audio('assets/audio/typewriter.mp3');
-  private speed = 50; // ms entre chaque caractère
+  private speed = 50;
 
   constructor(
     private router: Router,
@@ -91,20 +100,22 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   }
 
   choose(choice: { label: string; action: string }) {
-    if (choice.action === 'play') {
-      this.router.navigate(['/play']);
-      return;
-    }
+    // Retour
     if (choice.action === 'back') {
       this.current = this.steps[0];
       this.startTyping();
       return;
     }
+
+    // Modal pour "viewCards"
     if (choice.action === 'viewCards') {
-      this.showModal(ViewCardsComponent);
+      this.openModal(ViewCardsComponent);
       return;
     }
-    // … ajoute d’autres cas viewCardDetails, createCard, etc. …
+
+    // … autres modals (viewCardDetails, createCard, etc.) …
+
+    // Changement d’étape par défaut
     const next = this.steps.find(s => s.action === choice.action);
     if (next) {
       this.current = next;
@@ -112,9 +123,25 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  private showModal(component: any) {
-    // Injecte directement le composant dans le ng-container
-    this.modalHost.clear();
-    this.modalService.openModal(this.modalHost, component);
+  private openModal(component: any) {
+    this.isModalVisible = true;
+    // on attend un tick pour que <app-modal> soit en DOM
+    setTimeout(() => {
+      const host: ViewContainerRef = this.modalComponent.modalContainer;
+      host.clear();
+      this.modalService.openModal(host, component);
+    });
+  }
+
+
+  closeModal() {
+    // 1) vider le conteneur
+    this.modalComponent.modalContainer.clear();
+    // 2) masquer le modal
+    this.isModalVisible = false;
+
+    // 3) réafficher le message + choix de l'étape courante
+    this.displayedText = this.current.message;
+    this.showChoices = true;
   }
 }
