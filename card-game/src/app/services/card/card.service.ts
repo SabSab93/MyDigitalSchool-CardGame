@@ -1,7 +1,14 @@
+// src/app/services/card/card.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { CardModel } from '../../types/cardModel-type';
+
+interface CardBasic {
+  id: string;
+  name: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class CardService {
@@ -9,11 +16,18 @@ export class CardService {
 
   constructor(private http: HttpClient) {}
 
+  /** Récupère d’abord id+name, puis pour chaque id la carte complète (avec value) */
   getAllCards(): Observable<CardModel[]> {
-    return this.http.get<CardModel[]>(this.apiUrl).pipe(
-      catchError((err) => {
-        console.error('Erreur lors de la récupération des cartes :', err);
-        return throwError(() => new Error('Impossible de récupérer les cartes.'));
+    return this.http.get<CardBasic[]>(this.apiUrl).pipe(
+      switchMap((basics) => {
+        if (!basics || basics.length === 0) {
+          return of([]);
+        }
+        // Pour chaque basic, on fait une requête GET /api/cards/:id
+        const calls = basics.map(b =>
+          this.http.get<CardModel>(`${this.apiUrl}/${b.id}`)
+        );
+        return forkJoin(calls);
       })
     );
   }

@@ -15,6 +15,7 @@ export class ViewCardsComponent implements OnInit {
   cards: CardModel[] = [];
   currentIndex = 0;
   selectedCard: CardModel | null = null;
+  selectedDescription = '';
 
   constructor(private cardService: CardService) {}
 
@@ -39,5 +40,8 @@ export class ViewCardsComponent implements OnInit {
 
   selectCard(card: CardModel) {
     this.selectedCard = card;
+    this.selectedDescription = "Carte dotée d'un pouvoir ancien et mystérieux!";
   }
+
+
 }
