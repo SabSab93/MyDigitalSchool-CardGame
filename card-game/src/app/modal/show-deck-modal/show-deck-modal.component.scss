@@ -1,17 +1,12 @@
 /* Reprend la class card-modal pour tous les modals */
-.card-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255, 192, 203, 0.8);
-    border-radius: 12px;
-    padding: 1rem;
-    text-align: center;
-    z-index: 1000;
-    max-width: 90vw;
-    max-height: 90vh;
-    overflow: auto;
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;    /* centre image et description */
+  width: 20rem;           /* largeur fixe de la “carte” */
+  margin: 0 auto;         /* centre .preview-container dans son parent */
+  text-align: center;
   }
   
   /* Spécifique au show-deck-modal */
@@ -48,4 +43,3 @@
       }
     }
   }
-  
