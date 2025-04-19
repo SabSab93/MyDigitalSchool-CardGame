@@ -16,15 +16,11 @@
   
   <!-- Modal de confirmation -->
   <app-delete-deck-modal
-    *ngIf="isModalVisible && selectedCard"
-    [card]="selectedCard"
-    (cancel)="onCancel()"
-    (confirm)="onConfirmDelete()"
-  ></app-delete-deck-modal>
-  <div
-    class="modal-overlay"
-    *ngIf="isModalVisible && selectedCard"
-    (click)="onCancel()"
-  ></div>
+  *ngIf="isModalVisible && selectedDeck"
+  [selectedDeck]="selectedDeck"
+  (cancel)="onCancel()"
+  (confirm)="onConfirmDelete()"
+></app-delete-deck-modal>
+<div class="modal-overlay" *ngIf="isModalVisible && selectedDeck" (click)="onCancel()"></div>
   
   
