@@ -61,4 +61,8 @@ export class DeckService {
   createDeck(deck: { name: string; cards: string[] }): Observable<DeckModel> {
     return this.http.put<DeckModel>(this.deckUrl, deck);
   }
-}
+  deleteDeck(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.deckUrl}/${id}`);
+  }
+
+ }
