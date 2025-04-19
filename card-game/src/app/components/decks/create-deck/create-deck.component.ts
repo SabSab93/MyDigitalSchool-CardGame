@@ -7,8 +7,6 @@ import { CardModel } from '../../../types/cardModel-type';
 import { DeckWithCardsModel } from '../../../types/deckModel-type';
 import { ShowDeckModalComponent } from '../../../modal/show-deck-modal/show-deck-modal.component';
 
-
-
 @Component({
   selector: 'app-create-deck',
   standalone: true,
@@ -22,8 +20,7 @@ export class CreateDeckComponent implements OnInit {
   selectedCards: CardModel[] = [];
   createdDeck: DeckWithCardsModel | null = null;
   showModal = false;
-  
-  
+  showSuccessMessage = false; // Ajout de l'état pour afficher le message de succès
 
   constructor(private cardService: CardService, private deckService: DeckService) {}
 
@@ -52,17 +49,17 @@ export class CreateDeckComponent implements OnInit {
   }
 
   isDeckValid(): boolean {
-    return this.deckName.trim().length > 0 && this.selectedCards.length <= 5 && this.totalValue <=  30;
+    return this.deckName.trim().length > 0 && this.selectedCards.length <= 5 && this.totalValue <= 30;
   }
 
   createDeck() {
     if (!this.isDeckValid()) return;
-  
+
     const deckData = {
       name: this.deckName.trim(),
       cards: this.selectedCards.map(c => c.id)
     };
-  
+
     this.deckService.createDeck(deckData).subscribe({
       next: (createdDeck) => {
         this.createdDeck = {
@@ -70,16 +67,19 @@ export class CreateDeckComponent implements OnInit {
           cards: this.selectedCards
         };
         this.showModal = true;
+        this.resetForm();
+
       },
       error: (err) => console.error('Erreur création deck :', err)
     });
   }
+
   handleCloseModal() {
     this.showModal = false;
     this.createdDeck = null;
   }
+
   resetForm() {
-    // Réinitialise les cartes sélectionnées et le nom du deck
     this.selectedCards = [];
     this.deckName = '';
     // Rétablir la liste des cartes (en enlevant les cartes déjà utilisées)
