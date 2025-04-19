@@ -19,5 +19,6 @@
     <button type="submit" [disabled]="!signInForm.form.valid">Se connecter</button>
   </form>
   <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  <button class="back-btn" (click)="goBack()">Retour à l'accueil</button>
 </div>
 </div>

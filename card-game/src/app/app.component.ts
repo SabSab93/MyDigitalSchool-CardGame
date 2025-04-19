@@ -29,7 +29,6 @@ export class AppComponent {
     this.isMuted ? this.audio.pause() : this.audio.play();
   }
 
-  // Démarre la musique après une première interaction utilisateur
   @HostListener('document:click', ['$event'])
   onUserInteraction(): void {
     if (!this.hasUserInteracted) {

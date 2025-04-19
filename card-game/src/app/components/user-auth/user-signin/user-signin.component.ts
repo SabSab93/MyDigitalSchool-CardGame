@@ -17,7 +17,9 @@ export class UserSignInComponent {
   errorMessage: string | null = null;
 
   constructor(private signInService: UserSignInService, private router: Router) {}
-
+  goBack() {
+    this.router.navigate(['/']);
+  }
   onSubmit(): void {
     this.errorMessage = null;
 
