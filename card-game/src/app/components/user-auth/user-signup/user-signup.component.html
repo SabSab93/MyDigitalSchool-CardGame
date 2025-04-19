@@ -1,10 +1,31 @@
-<form (ngSubmit)="onSubmit()" #signUpForm="ngForm">
-    <input type="text" [(ngModel)]="newUser.name" name="name" placeholder="Nom" required />
-    <input type="text" [(ngModel)]="newUser.login" name="login" placeholder="Identifiant" required />
-    <input type="password" [(ngModel)]="newUser.password" name="password" placeholder="Mot de passe" required />
-    <button type="submit">S'inscrire</button>
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
+<div class="background">
+<div class="auth-container">
+  <h2>Inscription</h2>
+  <form (ngSubmit)="onSubmit()" #signUpForm="ngForm">
+    <input
+      type="text"
+      name="name"
+      [(ngModel)]="newUser.name"
+      placeholder="Nom"
+      required
+    />
+    <input
+      type="text"
+      name="login"
+      [(ngModel)]="newUser.login"
+      placeholder="Identifiant"
+      required
+    />
+    <input
+      type="password"
+      name="password"
+      [(ngModel)]="newUser.password"
+      placeholder="Mot de passe"
+      required
+    />
+    <button type="submit" [disabled]="!signUpForm.form.valid">S'inscrire</button>
   </form>
-
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  <button class="back-btn" (click)="goBack()">Retour à l'accueil</button>
+</div>
+</div>

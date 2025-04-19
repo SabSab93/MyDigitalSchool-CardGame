@@ -24,7 +24,9 @@ export class UserSignUpComponent {
   errorMessage: string | null = null;
 
   constructor(private userInfoService: UserSignUpService, private router: Router) {}
-
+  goBack() {
+    this.router.navigate(['/']);
+  }
   onSubmit() {
     this.errorMessage = null;
     this.newUser.id = crypto.randomUUID(); 

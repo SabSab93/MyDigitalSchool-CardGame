@@ -22,9 +22,6 @@ export class AppComponent {
     this.faIconLibrary.addIcons(faVolumeUp, faVolumeMute);
     this.audio.loop = true;
     this.audio.volume = 0.5;
-
-    // Vérifie si le format est supporté
-    console.log('Can play MP3?', this.audio.canPlayType('audio/mpeg')); // doit renvoyer 'probably' ou 'maybe'
   }
 
   toggleSound(): void {
@@ -32,7 +29,6 @@ export class AppComponent {
     this.isMuted ? this.audio.pause() : this.audio.play();
   }
 
-  // Démarre la musique après une première interaction utilisateur
   @HostListener('document:click', ['$event'])
   onUserInteraction(): void {
     if (!this.hasUserInteracted) {
