@@ -7,7 +7,7 @@
           <span class="label">{{ deck.name }}</span>
           <div class="stats">
             Cartes : {{ deck.cards.length }}/5 |
-            Valeur : {{ getTotalValue() }}/30
+            Valeur : {{ getTotalValue(deck) }}/30
           </div>
         </li>
       </ul>
@@ -39,7 +39,12 @@
       <div class="deck-actions">
         <label for="deck-name">Nom du deck :</label>
         <input type="text" id="deck-name" [(ngModel)]="deckName" />
-        <button (click)="saveDeck()" [disabled]="!validateDeck()">Valider</button>
+  
+        <button class="validate-button" 
+            [disabled]="!validateDeck()" 
+            (click)="updateDeck()">
+          Valider le deck
+        </button>
       </div>
     </div>
   </div>

@@ -6,7 +6,6 @@ import { CardModel } from '../../../types/cardModel-type';
 import { CardService } from '../../../services/card/card.service';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-edit-deck',
   standalone: true,
@@ -14,13 +13,13 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './edit-deck.component.html',
   styleUrls: ['./edit-deck.component.scss']
 })
-
 export class EditDeckComponent implements OnInit {
   decks: DeckWithCardsModel[] = [];
   selectedDeck: DeckWithCardsModel | null = null;
-  availableCards: CardModel[] = []; // Liste des cartes disponibles
-  selectedCards: CardModel[] = []; // Cartes sélectionnées pour le deck
-  deckName: string = ''; // Nom du deck à modifier
+  deckName = '';
+  selectedCards: CardModel[] = [];
+  availableCards: CardModel[] = [];
+  isDeckUpdated = false;
 
   constructor(
     private deckService: DeckService,
@@ -39,13 +38,26 @@ export class EditDeckComponent implements OnInit {
   }
 
   selectDeck(deck: DeckWithCardsModel) {
-    this.selectedDeck = deck;
+    this.selectedDeck = { ...deck, cards: [...deck.cards] }; // copie défensive
     this.deckName = deck.name;
-    this.selectedCards = [...deck.cards]; // Copie des cartes du deck pour les modifier
+    this.selectedCards = [...deck.cards];
+    this.isDeckUpdated = false;
+  }
+
+  getTotalValue(deck: DeckWithCardsModel): number {
+    return deck.cards.reduce((acc, card) => acc + (card.value || 0), 0);
+  }
+
+  validateDeck(): boolean {
+    return (
+      this.deckName.trim().length > 0 &&
+      this.selectedCards.length <= 5 &&
+      this.getTotalValue(this.selectedDeck!) <= 30
+    );
   }
 
   addCard(card: CardModel) {
-    if (this.selectedCards.length < 5) {
+    if (this.selectedCards.length < 5 && !this.selectedCards.find(c => c.id === card.id)) {
       this.selectedCards.push(card);
     }
   }
@@ -54,25 +66,25 @@ export class EditDeckComponent implements OnInit {
     this.selectedCards = this.selectedCards.filter(c => c.id !== card.id);
   }
 
-  getTotalValue(): number {
-    return this.selectedCards.reduce((acc, card) => acc + (card.value || 0), 0);
-  }
+  updateDeck() {
+    if (!this.selectedDeck || !this.selectedDeck.id) return;
 
-  validateDeck(): boolean {
-    return (
-      this.deckName.trim().length > 0 &&
-      this.selectedCards.length <= 5 &&
-      this.getTotalValue() <= 30
-    );
-  }
+    const updatedDeck: { id: string; name: string; cards: string[] } = {
+      id: this.selectedDeck.id,
+      name: this.deckName,
+      cards: this.selectedCards.map(card => card.id)
+    };
 
-  saveDeck() {
-    if (this.selectedDeck) {
-      const updatedDeck = { ...this.selectedDeck, name: this.deckName, cards: this.selectedCards };
-      this.deckService.updateDeck(updatedDeck).subscribe(() => {
+    this.deckService.updateDeck(updatedDeck).subscribe({
+      next: updated => {
+        const index = this.decks.findIndex(d => d.id === updated.id);
+        if (index > -1) {
+          this.decks[index] = { ...updated, cards: this.selectedCards };
+        }
+        this.selectedDeck = null;
         console.log('Deck mis à jour');
-      });
-    }
+      },
+      error: err => console.error('Erreur mise à jour du deck :', err)
+    });
   }
 }
-

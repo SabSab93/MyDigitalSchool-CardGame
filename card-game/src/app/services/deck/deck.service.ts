@@ -65,8 +65,8 @@ export class DeckService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  updateDeck(updatedDeck: DeckWithCardsModel): Observable<DeckWithCardsModel> {
-    return this.http.put<DeckWithCardsModel>(`${this.apiUrl}/decks/${updatedDeck.id}`, updatedDeck);
+  updateDeck(updatedDeck: { id: string; name: string; cards: string[] }): Observable<any> {
+    return this.http.put(`${this.apiUrl}/decks/${updatedDeck.id}`, updatedDeck);
   }
 
  }
