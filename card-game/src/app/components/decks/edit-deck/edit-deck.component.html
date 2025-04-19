@@ -1,0 +1,46 @@
+<div class="edit-deck-container">
+    <div class="list-container">
+      <p class="dialog-text">Voici les decks disponibles :</p>
+      <ul class="choices">
+        <li *ngFor="let deck of decks" (click)="selectDeck(deck)">
+          <span class="arrow">➤</span>
+          <span class="label">{{ deck.name }}</span>
+          <div class="stats">
+            Cartes : {{ deck.cards.length }}/5 |
+            Valeur : {{ getTotalValue() }}/30
+          </div>
+        </li>
+      </ul>
+    </div>
+  
+    <div *ngIf="selectedDeck" class="deck-details">
+      <h3>Modification du deck : {{ selectedDeck.name }}</h3>
+  
+      <div class="card-list">
+        <h4>Cartes actuelles :</h4>
+        <ul>
+          <li *ngFor="let card of selectedCards">
+            <span>{{ card.name }}</span>
+            <button (click)="removeCard(card)">-</button>
+          </li>
+        </ul>
+      </div>
+  
+      <div class="add-card">
+        <h4>Ajouter des cartes :</h4>
+        <ul>
+          <li *ngFor="let card of availableCards">
+            <span>{{ card.name }}</span>
+            <button (click)="addCard(card)">+</button>
+          </li>
+        </ul>
+      </div>
+  
+      <div class="deck-actions">
+        <label for="deck-name">Nom du deck :</label>
+        <input type="text" id="deck-name" [(ngModel)]="deckName" />
+        <button (click)="saveDeck()" [disabled]="!validateDeck()">Valider</button>
+      </div>
+    </div>
+  </div>
+  

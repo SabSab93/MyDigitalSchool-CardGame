@@ -18,6 +18,7 @@ import { DeleteCardComponent } from '../../cards/delete-card/delete-card.compone
 import { ViewDeckComponent } from '../../decks/view-decks/view-decks.component';
 import { CreateDeckComponent } from '../../decks/create-deck/create-deck.component';
 import {DeleteDeckComponent} from '../../decks/delete-deck/delete-deck.component';
+import { EditDeckComponent } from '../../decks/edit-deck/edit-deck.component';
 
 interface Step {
   message: string;
@@ -152,8 +153,11 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       this.openModal(DeleteDeckComponent);
       return;
     }
-    
-    
+    if (choice.action === 'editDeck') {
+      this.openModal(EditDeckComponent);
+      return;
+    }
+
 
     const next = this.steps.find(s => s.action === choice.action);
     if (next) {

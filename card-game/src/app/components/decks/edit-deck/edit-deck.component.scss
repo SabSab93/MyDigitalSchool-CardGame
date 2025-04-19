@@ -1,0 +1,50 @@
+.edit-deck-container {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .list-container {
+    flex: 1;
+  }
+  
+  .choices li {
+    cursor: pointer;
+    margin: 0.5rem 0;
+  }
+  
+  .card-list, .add-card {
+    margin-top: 1rem;
+  }
+  
+  .card-list li, .add-card li {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+  }
+  
+  .deck-actions {
+    margin-top: 1rem;
+  }
+  
+  .deck-actions input {
+    padding: 0.5rem;
+    margin-right: 1rem;
+  }
+  
+  button {
+    padding: 0.5rem;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button[disabled] {
+    background-color: grey;
+  }
+  
+  button:hover {
+    background-color: #ad1457;
+    color: white;
+  }
+  
