@@ -22,9 +22,6 @@ export class AppComponent {
     this.faIconLibrary.addIcons(faVolumeUp, faVolumeMute);
     this.audio.loop = true;
     this.audio.volume = 0.5;
-
-    // Vérifie si le format est supporté
-    console.log('Can play MP3?', this.audio.canPlayType('audio/mpeg')); // doit renvoyer 'probably' ou 'maybe'
   }
 
   toggleSound(): void {

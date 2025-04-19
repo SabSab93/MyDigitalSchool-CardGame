@@ -80,7 +80,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   private charIndex = 0;
   private intervalId!: any;
   showChoices = false;
-  private sound = new Audio('assets/audio/typewriter.mp3');
+  // private sound = new Audio('assets/audio/typewriter.mp3');
   private speed = 50;
 
   constructor(
@@ -106,8 +106,8 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     this.intervalId = setInterval(() => {
       if (this.charIndex < this.fullText.length) {
         this.displayedText += this.fullText.charAt(this.charIndex);
-        this.sound.currentTime = 0;
-        this.sound.play().catch(() => {});
+        // this.sound.currentTime = 0;
+        // this.sound.play().catch(() => {});
         this.charIndex++;
       } else {
         clearInterval(this.intervalId);
