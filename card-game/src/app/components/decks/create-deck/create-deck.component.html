@@ -1,0 +1,34 @@
+<div class="create-deck-container">
+  <h2 class="title">Créer un nouveau deck</h2>
+
+  <label class="label">Nom du deck :</label>
+  <input [(ngModel)]="deckName" class="input" placeholder="Nom de ton deck"/>
+
+  <p class="subtext">Sélectionnez les cartes</p>
+
+  <ul class="choices">
+    <li 
+      *ngFor="let card of cards" 
+      (click)="toggleCardSelection(card)"
+      [class.selected]="isCardSelected(card)"
+    >
+      <span class="arrow">➤</span>
+      <span class="label">{{ card.name }} — {{ card.value }}</span>
+    </li>
+  </ul>
+
+  <p class="summary">Cartes sélectionnées : {{ selectedCards.length }}/5 — Valeur : {{ totalValue }}/30</p>
+
+  <button *ngIf="isDeckValid()" (click)="createDeck()" class="create-btn">
+    Créer deck
+  </button>
+
+
+
+  <!-- Modal d'affichage du deck créé -->
+  <app-show-deck-modal
+    *ngIf="showModal && createdDeck"
+    [deck]="createdDeck"
+    (close)="handleCloseModal()"
+  ></app-show-deck-modal>
+</div>
