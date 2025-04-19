@@ -18,7 +18,7 @@ interface CreateDeckPayload {
 
 @Injectable({ providedIn: 'root' })
 export class DeckService {
-  private deckUrl = 'http://localhost:3000/api/decks';
+  private apiUrl = 'http://localhost:3000/api/decks';
 
   constructor(
     private http: HttpClient,
@@ -27,7 +27,7 @@ export class DeckService {
 
   /** Récupère tous les decks avec leurs cartes */
   getAllDecks(): Observable<DeckWithCardsModel[]> {
-    return this.http.get<DeckBasic[]>(this.deckUrl).pipe(
+    return this.http.get<DeckBasic[]>(this.apiUrl).pipe(
       switchMap(decks => {
         if (!decks?.length) return of([]);
         const calls = decks.map(d =>
@@ -35,7 +35,7 @@ export class DeckService {
             id: string;
             name: string;
             cards: string[] | CardModel[];
-          }>(`${this.deckUrl}/${d.id}`)
+          }>(`${this.apiUrl}/${d.id}`)
         );
         return forkJoin(calls);
       }),
@@ -59,10 +59,16 @@ export class DeckService {
 
   /** Crée un nouveau deck */
   createDeck(deck: { name: string; cards: string[] }): Observable<DeckModel> {
-    return this.http.put<DeckModel>(this.deckUrl, deck);
+    return this.http.put<DeckModel>(this.apiUrl, deck);
   }
   deleteDeck(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.deckUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  updateDeck(updatedDeck: { id: string; name: string; cards: string[] }) {
+    return this.http.post<{ id: string; name: string; cards: string[] }>(
+      this.apiUrl, updatedDeck
+    );
   }
 
  }
