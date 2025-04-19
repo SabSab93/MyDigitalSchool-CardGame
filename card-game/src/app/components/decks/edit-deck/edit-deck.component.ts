@@ -67,24 +67,40 @@ export class EditDeckComponent implements OnInit {
   }
 
   updateDeck() {
-    if (!this.selectedDeck || !this.selectedDeck.id) return;
-
+    if (!this.selectedDeck || !this.selectedDeck.id) {
+      console.error('Deck sélectionné ou ID manquant');
+      return;
+    }
+  
     const updatedDeck: { id: string; name: string; cards: string[] } = {
       id: this.selectedDeck.id,
       name: this.deckName,
       cards: this.selectedCards.map(card => card.id)
     };
-
+  
+    console.log('Données envoyées pour mise à jour du deck:', updatedDeck);
+  
+    // Utilisation de `POST` au lieu de `PATCH` car le backend attend une requête POST
     this.deckService.updateDeck(updatedDeck).subscribe({
       next: updated => {
+        console.log('Deck mis à jour avec succès:', updated);
         const index = this.decks.findIndex(d => d.id === updated.id);
         if (index > -1) {
           this.decks[index] = { ...updated, cards: this.selectedCards };
         }
         this.selectedDeck = null;
-        console.log('Deck mis à jour');
       },
-      error: err => console.error('Erreur mise à jour du deck :', err)
+      error: err => {
+        console.error('Erreur mise à jour du deck:', err);
+        if (err.status === 400) {
+          console.error('Mauvaise requête:', err.message);
+        } else if (err.status === 500) {
+          console.error('Erreur serveur:', err.message);
+        } else {
+          console.error('Autre erreur:', err.message);
+        }
+      }
     });
   }
+  
 }

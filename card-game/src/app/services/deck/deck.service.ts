@@ -65,8 +65,10 @@ export class DeckService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  updateDeck(updatedDeck: { id: string; name: string; cards: string[] }): Observable<any> {
-    return this.http.put(`${this.apiUrl}/decks/${updatedDeck.id}`, updatedDeck);
+  updateDeck(updatedDeck: { id: string; name: string; cards: string[] }) {
+    return this.http.post<{ id: string; name: string; cards: string[] }>(
+      this.apiUrl, updatedDeck
+    );
   }
 
  }
