@@ -1,4 +1,4 @@
-<div class="show-deck-modal card-modal" (click)="close.emit()">
+<div class="preview-container show-deck-modal" (click)="close.emit()">
   <h2>Deck : {{ deck.name }}</h2>
   <p class="deck-stats">
     Cartes : {{ deck.cards.length }}/5 | Valeur : {{ getTotalValue(deck) }}/30

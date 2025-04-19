@@ -1,14 +1,15 @@
-.deck-modal {
-    position: fixed;
-    text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 12px;
-    padding: 1rem;
-    background: rgba(255, 192, 203, 0.8);
+.delete-deck-modal{
+  position: fixed;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 12px;
+  padding: 1rem;
+  background: rgba(255, 192, 203, 0.8);
   }
   
+
   .buttons {
     display: flex;
     justify-content: space-between;

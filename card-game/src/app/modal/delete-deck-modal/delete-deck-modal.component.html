@@ -1,12 +1,14 @@
-<div class="delete-modal deck-modal">
-  <h2>Confirmé la suppression</h2>
+<div class="delete-deck-modal">
+  <h2>Confirmer la suppression</h2>
 
-  <!-- aperçu de deck -->
-  <app-show-deck-modal
-  *ngIf="selectedDeck"
-  [deck]="selectedDeck"
-  (close)="closeModal()"
-></app-show-deck-modal>
+  <!-- Encapsulation du preview deck -->
+
+    <app-show-deck-modal
+      *ngIf="selectedDeck"
+      [deck]="selectedDeck"
+      (close)="closeModal()"
+    ></app-show-deck-modal>
+
 
   <div class="buttons">
     <button class="btn" (click)="cancel.emit()">Non</button>
