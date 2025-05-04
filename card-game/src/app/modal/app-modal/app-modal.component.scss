@@ -1,42 +1,40 @@
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
   display: flex;
-  justify-content: flex-start;  // alignement à gauche
-  align-items: flex-start;      // alignement en haut
-  padding: 1rem;                // espace autour
-  z-index: 999;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 1rem;
+  /* z-index abaissé : l’overlay (250) + contenu (400) sont gérés côté parent */
+  z-index: 250;
 }
 
 .modal-overlay {
-  position: absolute;
-  inset: 0;
+  position: fixed;       
+  inset: 0;             
+  background: rgba(0,0,0,0.5);
+  z-index: 250;          
+  pointer-events: auto; 
+  cursor: default;
 }
+
 .modal-content {
   position: relative;
-  background: rgba(255, 192, 203, 0.8);
+  background: rgba(255,192,203,0.9);
   padding: 1rem 2rem;
-  font-family: 'Courier New', monospace;
-
-  /* Dimensions élargies */
-  width: 90vw;       // passe de 80 -> 90% de la fenêtre
-  max-width: 1200px; // tu peux augmenter si tu veux
-  max-height: 90vh;
+  width: 30%;
+  max-height: 85vh;
   overflow-y: auto;
+  border-radius: 16px;
+  z-index: 400;      /* au‑dessus de l’overlay mais sous la bulle si besoin */
 }
-
 
 .close-btn {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: .5rem;
+  right: .5rem;
   font-size: 1.8rem;
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #333;
 }

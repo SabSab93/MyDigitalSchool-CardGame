@@ -1,4 +1,4 @@
-<div class="home-card-container">
+<div class="home-card-container" [class.modal-open]="isModalVisible">
   <div class="scene">
     <div class="background"></div>
     <img
@@ -29,6 +29,5 @@
   <app-modal
     *ngIf="isModalVisible"
     (close)="closeModal()"
-    class="dialog-box modal"
   ></app-modal>
 </div>

@@ -21,11 +21,16 @@ $white-transparent: rgba(255,255,255,0.85);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: -1;
+
+  /* laisse tout passer */
+  pointer-events: none;
 }
 
 /* conteneur style kawaii */
 .welcome-container {
+  /* capte uniquement les clics sur le form */
+  pointer-events: auto;
+
   max-width: 360px;
   width: 90%;
   padding: 2rem;

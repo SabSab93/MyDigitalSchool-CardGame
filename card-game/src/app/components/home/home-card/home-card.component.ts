@@ -32,7 +32,10 @@ interface Step {
   standalone: true,
   imports: [CommonModule, RouterModule, AppModalComponent],
   templateUrl: './home-card.component.html',
-  styleUrls: ['./home-card.component.scss']
+  styleUrls: ['./home-card.component.scss'],
+  host: {
+    '[class.modal-open]': 'isModalVisible'
+  }
 })
 export class HomeCardComponent implements OnInit, OnDestroy {
   @ViewChild(AppModalComponent)
