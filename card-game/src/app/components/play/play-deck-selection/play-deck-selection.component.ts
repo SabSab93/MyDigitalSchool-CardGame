@@ -44,7 +44,7 @@ export class PlayDeckSelectionComponent implements OnInit {
   }
 
   select(deck: DeckWithCardsModel) {
-    if (!deck.id) return;              // on s’assure que deck.id existe
+    if (!deck.id) return;             
     this.router.navigate(['/play', deck.id]);
   }
 }
