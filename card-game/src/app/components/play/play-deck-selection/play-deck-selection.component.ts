@@ -1,29 +1,15 @@
-// src/app/play/play-deck-selection/play-deck-selection.component.ts
 import { Component, OnInit } from '@angular/core';
-import { CommonModule }     from '@angular/common';
-import { Router }           from '@angular/router';
-import { DeckService }      from '../../../services/deck/deck.service';
+import { Router, RouterModule }            from '@angular/router';
 import { DeckWithCardsModel } from '../../../types/deckModel-type';
+import { DeckService }        from '../../../services/deck/deck.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-play-deck-selection',
   standalone: true,
-  imports: [ CommonModule ],
-  template: `
-    <h3>Choisissez un deck pour jouer :</h3>
-    <ul class="deck-list">
-      <li *ngFor="let deck of decks"
-          (click)="select(deck)"
-          [title]="stats(deck)">
-        {{ deck.name }}
-      </li>
-    </ul>
-  `,
-  styles: [`
-    .deck-list { list-style:none; columns:2; column-gap:1rem; padding:0; }
-    .deck-list li { padding:.5rem; cursor:pointer; transition:background .2s; }
-    .deck-list li:hover { background:rgba(149,125,173,.2); }
-  `]
+  imports : [  CommonModule,  RouterModule],
+  templateUrl: './play-deck-selection.component.html',
+  styleUrls: ['./play-deck-selection.component.scss']
 })
 export class PlayDeckSelectionComponent implements OnInit {
   decks: DeckWithCardsModel[] = [];
@@ -34,17 +20,20 @@ export class PlayDeckSelectionComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.deckService.getAllDecks().subscribe(d => this.decks = d);
+    this.deckService.getAllDecks().subscribe(decks => {
+      this.decks = decks;
+    });
   }
 
+  /** Méthode utilitaire pour afficher stats en tooltip */
   stats(deck: DeckWithCardsModel): string {
     const count = deck.cards.length;
-    const total = deck.cards.reduce((sum, c) => sum + (c.value || 0), 0);
-    return `Cartes : ${count}/5 — Valeur : ${total}/30`;
+    const total = deck.cards.reduce((s, c) => s + (c.value || 0), 0);
+    return `Cartes : ${count}/5 | Valeur : ${total}/30`;
   }
 
+  /** Lorsque l’on clique sur un deck, on navigue vers /play/:deckId */
   select(deck: DeckWithCardsModel) {
-    if (!deck.id) return;             
-    this.router.navigate(['/play', deck.id]);
+    this.router.navigate(['/play', deck.id!]);
   }
 }

@@ -1,0 +1,55 @@
+<div class="play-wrapper">
+
+    <!-- Sélection des cartes -->
+    <div class="cards-grid" *ngIf="stage === 1">
+      <div
+        *ngFor="let c of cards"
+        class="card"
+        (click)="chooseCard(c)"
+        [class.selected]="chosenCard === c"
+      >
+        <img
+          [src]="'/assets/images/cards/card_' + c.value + '.png'"
+          [alt]="c.name"
+          class="card-img"
+        />
+        <div class="card-value">{{ c.value }}</div>
+      </div>
+    </div>
+  
+    <!-- Combat modal -->
+    <app-modal *ngIf="showModal" (close)="closeBattle()">
+      <div class="battle-modal">
+        <!-- votre carte -->
+        <div class="card-view">
+          <div class="card-face">
+            <img
+              [src]="'/assets/images/cards/card_' + chosenCard?.value + '.png'"
+              [alt]="chosenCard?.name"
+            />
+            <div>{{ chosenCard?.value }}</div>
+          </div>
+        </div>
+        <!-- carte adverse (non-cliquable) -->
+        <div class="card-view opponent" [class.flipped]="flipped">
+          <div class="card-back">?</div>
+          <div class="card-face">
+            <img
+              [src]="'/assets/images/cards/card_' + opponentCard.value + '.png'"
+              [alt]="opponentCard.name"
+            />
+            <div>{{ opponentCard.value }}</div>
+          </div>
+        </div>
+      </div>
+    </app-modal>
+  
+    <!-- Dialogue en bas -->
+    <div class="dialog-box" *ngIf="stage === 0" (click)="nextStage()">
+      <div class="speaker-name">Sélection</div>
+      <p class="dialog-text">
+        Cliquez pour <strong>sélectionner</strong> une carte…
+      </p>
+    </div>
+  </div>
+  

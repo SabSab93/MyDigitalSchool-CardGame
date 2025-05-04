@@ -1,8 +1,12 @@
 <h3>Choisissez un deck pour jouer :</h3>
+
 <ul class="deck-list">
-  <li *ngFor="let deck of decks"
-      (click)="select(deck)"
-      [title]="stats(deck)">
+  <li
+    *ngFor="let deck of decks"
+    (click)="select(deck)"
+    [title]="stats(deck)"
+    class="deck-item"
+  >
     {{ deck.name }}
   </li>
 </ul>
