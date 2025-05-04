@@ -1,5 +1,4 @@
 <div class="home-card-container">
-
   <div class="scene">
     <div class="background"></div>
     <img
@@ -9,14 +8,17 @@
     />
   </div>
 
-  <!-- Boîte de dialogue (rose clair) -->
-  <div class="dialog-box" *ngIf="!isModalVisible" (click)="onTextClick()">
+  <div class="dialog-box" (click)="onTextClick()">
+    <!-- Étiquette « speaker » en haut-gauche -->
+    <div class="speaker-name">{{ current.speaker || 'Narrateur' }}</div>
+
     <p class="dialog-text">{{ displayedText }}</p>
+
     <ul class="choices" *ngIf="showChoices">
       <li
-        *ngFor="let choice of current.choices"
+        *ngFor="let choice of current.choices; let i = index"
         (click)="choose(choice); $event.stopPropagation()"
-        [ngClass]="{ back: choice.label === 'Retour' }"
+        [style.animationDelay]="(0.6 * (i + 1)) + 's'"
       >
         <span class="arrow">➤</span>
         <span class="label">{{ choice.label }}</span>
@@ -24,10 +26,9 @@
     </ul>
   </div>
 
-  <!-- Modal, même style que .dialog-box -->
   <app-modal
     *ngIf="isModalVisible"
     (close)="closeModal()"
-    class="dialog-box"
+    class="dialog-box modal"
   ></app-modal>
 </div>

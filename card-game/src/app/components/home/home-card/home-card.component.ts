@@ -17,10 +17,11 @@ import { EditCardComponent } from '../../cards/edit-card/edit-card.component';
 import { DeleteCardComponent } from '../../cards/delete-card/delete-card.component';
 import { ViewDeckComponent } from '../../decks/view-decks/view-decks.component';
 import { CreateDeckComponent } from '../../decks/create-deck/create-deck.component';
-import {DeleteDeckComponent} from '../../decks/delete-deck/delete-deck.component';
+import { DeleteDeckComponent } from '../../decks/delete-deck/delete-deck.component';
 import { EditDeckComponent } from '../../decks/edit-deck/edit-deck.component';
 
 interface Step {
+  speaker?: string;
   message: string;
   choices?: { label: string; action: string }[];
   action?: string;
@@ -42,7 +43,8 @@ export class HomeCardComponent implements OnInit, OnDestroy {
 
   steps: Step[] = [
     {
-      message: 'Bienvenue dans le menu du jeu de bataille ! Que souhaitez‑vous faire ?',
+      speaker: 'Menu principal',
+      message: 'Bienvenue dans le menu du jeu de bataille ! Que souhaitez-vous faire ?',
       choices: [
         { label: 'Gestion des cartes', action: 'cards' },
         { label: 'Gestion des decks', action: 'decks' },
@@ -50,6 +52,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       ]
     },
     {
+      speaker: 'Cartes',
       action: 'cards',
       message: 'Vous avez choisi la gestion des cartes. Sélectionnez une option ci-dessous.',
       choices: [
@@ -61,6 +64,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       ]
     },
     {
+      speaker: 'Decks',
       action: 'decks',
       message: 'Vous avez choisi la gestion des decks. Sélectionnez une option ci-dessous.',
       choices: [
@@ -80,12 +84,12 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   private charIndex = 0;
   private intervalId!: any;
   showChoices = false;
-  // private sound = new Audio('assets/audio/typewriter.mp3');
+
+  // Son et vitesse
+  private sound!: HTMLAudioElement;
   private speed = 50;
 
-  constructor(
-    private modalService: AppModalService
-  ) {}
+  constructor(private modalService: AppModalService) {}
 
   ngOnInit() {
     this.startTyping();
@@ -93,6 +97,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.intervalId);
+    this.stopSound();
   }
 
   private startTyping() {
@@ -103,16 +108,20 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     this.isTyping = true;
     clearInterval(this.intervalId);
 
+    // Lance la boucle sonore
+    this.sound = new Audio('assets/audio/typewriter.mp3');
+    this.sound.loop = true;
+    this.sound.currentTime = 0;
+    this.sound.play().catch(() => { /* silent */ });
+
     this.intervalId = setInterval(() => {
       if (this.charIndex < this.fullText.length) {
-        this.displayedText += this.fullText.charAt(this.charIndex);
-        // this.sound.currentTime = 0;
-        // this.sound.play().catch(() => {});
-        this.charIndex++;
+        this.displayedText += this.fullText.charAt(this.charIndex++);
       } else {
         clearInterval(this.intervalId);
         this.isTyping = false;
         this.showChoices = !!this.current.choices;
+        this.stopSound();
       }
     }, this.speed);
   }
@@ -123,41 +132,14 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       this.startTyping();
       return;
     }
-
-    if (choice.action === 'viewCards') {
-      this.openModal(ViewCardsComponent);
-      return;
-    }
-    if (choice.action === 'createCard') {
-      this.openModal(CreateCardComponent);
-      return;
-    }
-    if (choice.action === 'editCard') {
-      this.openModal(EditCardComponent);
-      return;
-    }
-    if (choice.action === 'deleteCard') {
-      this.openModal(DeleteCardComponent);
-      return;
-    }
-    if (choice.action === 'viewDecks') {
-      this.openModal(ViewDeckComponent);
-      return;
-    }
-
-    if (choice.action === 'createDeck') {
-      this.openModal(CreateDeckComponent);
-      return;
-    }
-    if (choice.action === 'deleteDeck') {
-      this.openModal(DeleteDeckComponent);
-      return;
-    }
-    if (choice.action === 'editDeck') {
-      this.openModal(EditDeckComponent);
-      return;
-    }
-
+    if (choice.action === 'viewCards') { this.openModal(ViewCardsComponent); return; }
+    if (choice.action === 'createCard') { this.openModal(CreateCardComponent); return; }
+    if (choice.action === 'editCard')   { this.openModal(EditCardComponent); return; }
+    if (choice.action === 'deleteCard') { this.openModal(DeleteCardComponent); return; }
+    if (choice.action === 'viewDecks')  { this.openModal(ViewDeckComponent); return; }
+    if (choice.action === 'createDeck') { this.openModal(CreateDeckComponent); return; }
+    if (choice.action === 'deleteDeck') { this.openModal(DeleteDeckComponent); return; }
+    if (choice.action === 'editDeck')   { this.openModal(EditDeckComponent); return; }
 
     const next = this.steps.find(s => s.action === choice.action);
     if (next) {
@@ -169,9 +151,8 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   openModal(component: Type<any>) {
     this.componentToLoad = component;
     this.isModalVisible = true;
-
     setTimeout(() => {
-      if (this.modalComponent && this.modalComponent.modalContainer) {
+      if (this.modalComponent?.modalContainer) {
         const host: ViewContainerRef = this.modalComponent.modalContainer;
         host.clear();
         this.modalService.openModal(host, component);
@@ -180,14 +161,15 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
-    this.modalComponent.modalContainer.clear();
+    if (this.modalComponent?.modalContainer) {
+      this.modalComponent.modalContainer.clear();
+    }
     this.isModalVisible = false;
     this.componentToLoad = null;
     this.displayedText = this.current.message;
     this.showChoices = true;
   }
 
-    // a voir si je supprime apres
   @HostListener('document:click', ['$event'])
   onAnywhereClick(event: MouseEvent) {
     this.onTextClick();
@@ -199,7 +181,13 @@ export class HomeCardComponent implements OnInit, OnDestroy {
       this.displayedText = this.fullText;
       this.isTyping = false;
       this.showChoices = !!this.current.choices;
+      this.stopSound();
     }
   }
 
+  /** Arrête et remet le son au début */
+  private stopSound() {
+    this.sound.pause();
+    this.sound.currentTime = 0;
+  }
 }
