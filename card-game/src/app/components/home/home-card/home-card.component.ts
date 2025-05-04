@@ -19,6 +19,8 @@ import { ViewDeckComponent } from '../../decks/view-decks/view-decks.component';
 import { CreateDeckComponent } from '../../decks/create-deck/create-deck.component';
 import { DeleteDeckComponent } from '../../decks/delete-deck/delete-deck.component';
 import { EditDeckComponent } from '../../decks/edit-deck/edit-deck.component';
+import { PlayDeckSelectionComponent } from '../../play/play-deck-selection/play-deck-selection.component';
+import { DeckWithCardsModel } from '../../../types/deckModel-type';
 
 interface Step {
   speaker?: string;
@@ -143,6 +145,7 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     if (choice.action === 'createDeck') { this.openModal(CreateDeckComponent); return; }
     if (choice.action === 'deleteDeck') { this.openModal(DeleteDeckComponent); return; }
     if (choice.action === 'editDeck')   { this.openModal(EditDeckComponent); return; }
+    if (choice.action === 'play')       {this.openModal(PlayDeckSelectionComponent);return;}
 
     const next = this.steps.find(s => s.action === choice.action);
     if (next) {
@@ -192,5 +195,12 @@ export class HomeCardComponent implements OnInit, OnDestroy {
   private stopSound() {
     this.sound.pause();
     this.sound.currentTime = 0;
+  }
+  startGame(deck: DeckWithCardsModel) {
+    // 1) Ferme le modal
+    this.closeModal();
+    // 2) Ici, remplacez par votre logique de démarrage :
+    console.log('On démarre la partie avec le deck', deck);
+    // Par exemple : this.gameService.init(deck);
   }
 }
