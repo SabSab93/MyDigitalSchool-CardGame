@@ -1,43 +1,44 @@
-/* Conteneur principal */
 .edit-deck-container {
-  padding: 1rem;
+  display: flex;
+  gap: 1rem;
+  height: 80vh;        /* pour que la scrollbar du modal gère le reste */
 }
 
-/* Titre et texte */
+/* Colonne où la liste peut défiler */
+.list-container {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-right: .5rem;
+}
+
+/* Item sélectionné */
+.choices li.selected {
+  background: rgba(149,125,173,0.2);
+}
+
+/* Styles généraux */
 .dialog-text {
   font-family: 'Courier New', monospace;
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  margin-bottom: .5rem;
 }
-
-/* Liste des decks */
 .choices {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  margin: 0; padding: 0;
 }
 .choices li {
-  margin: 0.25rem 0;
-  padding: 0.3rem;
-  border-radius: 4px;
-  transition: background 0.2s;
+  cursor: pointer;
+  padding: .5rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  transition: background .2s;
 }
-.choices li.selected,
 .choices li:hover {
-  background: rgba(255, 105, 180, 0.2);
-}
-
-/* Structure d’une ligne deck */
-.deck-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  background: rgba(149,125,173,0.1);
 }
 .arrow {
-  margin-right: 0.5rem;
+  margin-right: .5rem;
 }
 .label {
   flex: 1;
@@ -46,86 +47,4 @@
   font-size: 0.9rem;
   color: #666;
   font-family: 'Courier New', monospace;
-}
-
-/* Détails en ligne sous le deck sélectionné */
-.inline-details {
-  margin: 0.25rem 0 0.75rem 1.5rem;
-  padding-left: 0.5rem;
-  border-left: 2px solid #d81b60;
-}
-
-/* Listes de cartes (existantes et disponibles) */
-.card-list-inline,
-.add-card-inline {
-  list-style: none;
-  padding: 0;
-  margin: 0.5rem 0;
-}
-.card-list-inline li,
-.add-card-inline li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0.25rem 0;
-}
-
-/* Boutons + / - ronds collés au nom */
-.icon-btn {
-  border: none;
-  background: transparent;
-  width: 1.5rem;
-  height: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.icon-btn.remove {
-  background: rgba(216, 27, 96, 0.1);
-  color: #d81b60;
-}
-.icon-btn.remove:hover {
-  background: rgba(216, 27, 96, 0.2);
-}
-.icon-btn.add {
-  background: rgba(0, 128, 0, 0.1);
-  color: green;
-}
-.icon-btn.add:hover {
-  background: rgba(0, 128, 0, 0.2);
-}
-
-/* Bouton pour basculer la zone d’ajout (si besoin) */
-.toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin-bottom: 0.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'Courier New', monospace;
-}
-
-/* Bouton de validation inline */
-.validate-inline {
-  display: block;
-  margin-top: 0.5rem;
-  padding: 0.4rem 1rem;
-  background: #d77d9e;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.validate-inline:hover {
-  background: #ad1457;
-}
-.validate-inline[disabled] {
-  background: gray;
-  cursor: not-allowed;
 }

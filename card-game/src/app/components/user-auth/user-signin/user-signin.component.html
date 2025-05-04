@@ -1,24 +1,32 @@
-<div class="background">
-  <div class="auth-container">
-  <h2>Connexion</h2>
-  <form (ngSubmit)="onSubmit()" #signInForm="ngForm">
-    <input
-      type="text"
-      name="login"
-      [(ngModel)]="login"
-      placeholder="Identifiant"
-      required
-    />
-    <input
-      type="password"
-      name="password"
-      [(ngModel)]="password"
-      placeholder="Mot de passe"
-      required
-    />
-    <button type="submit" [disabled]="!signInForm.form.valid">Se connecter</button>
-  </form>
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-  <button class="back-btn" (click)="goBack()">Retour à l'accueil</button>
-</div>
+<div class="welcome-bg">
+  <div class="welcome-container">
+    <h2>Connexion</h2>
+    <form (ngSubmit)="onSubmit()" #signInForm="ngForm">
+      <input
+        type="text"
+        name="login"
+        [(ngModel)]="login"
+        placeholder="Identifiant"
+        required
+      />
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Mot de passe"
+        required
+      />
+      <button
+        type="submit"
+        class="btn"
+        [disabled]="!signInForm.form.valid"
+      >
+        Se connecter
+      </button>
+    </form>
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+    <button class="btn back-btn" (click)="goBack()">
+      Retour à l’accueil
+    </button>
+  </div>
 </div>
