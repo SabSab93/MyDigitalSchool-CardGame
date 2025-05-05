@@ -1,0 +1,7 @@
+<div class="modal-backdrop" (click)="onBackdropClick()">
+    <div class="modal-dialog" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="onCloseClick()">✕</button>
+      <ng-content></ng-content>
+    </div>
+  </div>
+  

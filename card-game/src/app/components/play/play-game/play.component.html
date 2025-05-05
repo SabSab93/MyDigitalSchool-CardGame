@@ -1,55 +1,92 @@
-<div class="play-wrapper">
+<div class="home-card-container play-wrapper" [class.modal-open]="showModal">
 
-    <!-- Sélection des cartes -->
-    <div class="cards-grid" *ngIf="stage === 1">
-      <div
-        *ngFor="let c of cards"
-        class="card"
-        (click)="chooseCard(c)"
-        [class.selected]="chosenCard === c"
-      >
-        <img
-          [src]="'/assets/images/cards/card_' + c.value + '.png'"
-          [alt]="c.name"
-          class="card-img"
-        />
-        <div class="card-value">{{ c.value }}</div>
-      </div>
-    </div>
-  
-    <!-- Combat modal -->
-    <app-modal *ngIf="showModal" (close)="closeBattle()">
-      <div class="battle-modal">
-        <!-- votre carte -->
-        <div class="card-view">
-          <div class="card-face">
-            <img
-              [src]="'/assets/images/cards/card_' + chosenCard?.value + '.png'"
-              [alt]="chosenCard?.name"
-            />
-            <div>{{ chosenCard?.value }}</div>
-          </div>
-        </div>
-        <!-- carte adverse (non-cliquable) -->
-        <div class="card-view opponent" [class.flipped]="flipped">
-          <div class="card-back">?</div>
-          <div class="card-face">
-            <img
-              [src]="'/assets/images/cards/card_' + opponentCard.value + '.png'"
-              [alt]="opponentCard.name"
-            />
-            <div>{{ opponentCard.value }}</div>
-          </div>
-        </div>
-      </div>
-    </app-modal>
-  
-    <!-- Dialogue en bas -->
-    <div class="dialog-box" *ngIf="stage === 0" (click)="nextStage()">
-      <div class="speaker-name">Sélection</div>
-      <p class="dialog-text">
-        Cliquez pour <strong>sélectionner</strong> une carte…
-      </p>
+  <!-- Scène + perso -->
+  <div class="scene">
+    <div class="background"></div>
+    <img
+      *ngIf="flipped && showResult"
+      src="/assets/images/characters/girl.png"
+      alt="Fille"
+      class="character"
+    />
+  </div>
+
+  <!-- Grille de cartes centrée -->
+  <div class="cards-grid">
+    <div
+      *ngFor="let c of cards"
+      class="card"
+      (click)="chooseCard(c)"
+    >
+      <img
+        [src]="'/assets/images/cards/card_' + c.value + '.png'"
+        [alt]="c.name"
+        class="card-img"
+      />
+      <div class="card-value">{{ c.value }}</div>
     </div>
   </div>
-  
+
+  <!-- Bulle de dialogue + confirmation -->
+  <div class="dialog-box" (click)="onDialogClick()">
+    <div class="speaker-name">
+      {{ showConfirmation ? 'Confirmation' : (chosenCard ? 'Adversaire' : 'Sélection') }}
+    </div>
+    <p class="dialog-text">
+      <ng-container *ngIf="!chosenCard">
+        Sélectionne une carte
+      </ng-container>
+      <ng-container *ngIf="chosenCard && !showConfirmation">
+        À mon tour !
+      </ng-container>
+      <ng-container *ngIf="showConfirmation">
+        Êtes-vous sûr de vouloir choisir la carte  
+        « {{ chosenCard?.name }} » à la valeur « {{ chosenCard?.value }} » ?
+      </ng-container>
+    </p>
+
+    <!-- Oui / Non -->
+    <ul class="choices" *ngIf="showConfirmation">
+      <li (click)="confirmChoice(); $event.stopPropagation()">
+        <span class="arrow">➤</span>
+        <span class="label">Oui</span>
+      </li>
+      <li (click)="cancelChoice(); $event.stopPropagation()">
+        <span class="arrow">➤</span>
+        <span class="label">Non</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Modal de confrontation -->
+  <app-play-modal *ngIf="showModal" (close)="closeBattle()">
+    <div class="battle-modal">
+      <!-- Carte joueur -->
+      <div class="card-view" [class.flipped]="flipped">
+        <div class="card-sides">
+          <div class="card-back">?</div>
+          <div class="card-front">
+            <img
+              [src]="'/assets/images/cards/card_' + chosenCard?.value + '.png'"
+            />
+            <div class="card-value">{{ chosenCard?.value }}</div>
+          </div>
+        </div>
+      </div>
+      <!-- Carte adversaire -->
+      <div class="card-view opponent" [class.flipped]="flipped">
+        <div class="card-sides">
+          <div class="card-back">?</div>
+          <div class="card-front">
+            <img
+              [src]="'/assets/images/cards/card_' + opponentCard?.value + '.png'"
+            />
+            <div class="card-value">{{ opponentCard?.value }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showResult" class="result">{{ resultMessage }}</div>
+  </app-play-modal>
+
+</div>

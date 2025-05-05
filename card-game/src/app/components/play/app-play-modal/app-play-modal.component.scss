@@ -1,0 +1,36 @@
+/* app-play-modal.component.scss */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-dialog {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 80vw !important;     /* occupe jusqu’à 80% de la fenêtre */
+  width: auto !important;
+  max-height: none;               /* plus de limite verticale */
+  overflow: visible !important;   /* plus de scroll */
+  box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #957DAD;
+}
