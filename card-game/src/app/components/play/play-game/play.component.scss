@@ -18,7 +18,7 @@ $medium-purple: #957DAD;
   overflow: hidden;
 }
 
-/* --- Dialogue --- */
+
 .dialog-box {
   position: absolute;
   bottom: 2%;
@@ -67,7 +67,6 @@ $medium-purple: #957DAD;
   }
 }
 
-/* --- Cartes centrées + lift hover --- */
 .cards-grid {
   position: absolute;
   bottom: 20%;
@@ -102,7 +101,7 @@ $medium-purple: #957DAD;
     font-size:.9rem;
   }
 }
-/* Modal de confrontation */
+
 .battle-modal {
   display: flex;
   justify-content: center;
@@ -112,7 +111,7 @@ $medium-purple: #957DAD;
   padding: 1rem;
 }
 
-/* Flip 3D des cartes */
+
 .card-view {
   width: 120px;
   height: 180px;
@@ -155,10 +154,10 @@ $medium-purple: #957DAD;
   transform: rotateY(180deg);
 }
 
-/* Résultat */
+
 .result {
   position: absolute;
-  bottom: -2rem;
+  bottom: -5rem;
   width: 100%;
   text-align: center;
   font-size: 1.8rem;
@@ -166,8 +165,22 @@ $medium-purple: #957DAD;
   color: #d0cbd4;
 }
 
-/* Animation entrée */
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+.scoreboard {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2rem;
+  background: rgba(255,248,231,0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-weight: bold;
+  color: #957DAD;
+  z-index: 90;
 }
