@@ -25,14 +25,14 @@ export class PlayDeckSelectionComponent implements OnInit {
     });
   }
 
-  /** Méthode utilitaire pour afficher stats en tooltip */
+
   stats(deck: DeckWithCardsModel): string {
     const count = deck.cards.length;
     const total = deck.cards.reduce((s, c) => s + (c.value || 0), 0);
     return `Cartes : ${count}/5 | Valeur : ${total}/30`;
   }
 
-  /** Lorsque l’on clique sur un deck, on navigue vers /play/:deckId */
+
   select(deck: DeckWithCardsModel) {
     this.router.navigate(['/play', deck.id!]);
   }
