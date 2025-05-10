@@ -1,17 +1,24 @@
-<div class="delete-deck-modal">
+<div class="delete-deck-modal" (click)="$event.stopPropagation()">
   <h2>Confirmer la suppression</h2>
 
-  <!-- Encapsulation du preview deck -->
-
-    <app-show-deck-modal
-      *ngIf="selectedDeck"
-      [deck]="selectedDeck"
-      (close)="closeModal()"
-    ></app-show-deck-modal>
-
+  <app-show-deck-modal
+    *ngIf="selectedDeck"
+    [deck]="selectedDeck"
+    (close)="onCancel()"
+  ></app-show-deck-modal>
 
   <div class="buttons">
-    <button class="btn" (click)="cancel.emit()">Non</button>
-    <button class="btn" (click)="confirm.emit()">Oui</button>
+    <button
+      class="btn btn-cancel"
+      (click)="onCancel(); $event.stopPropagation()"
+    >
+      Non
+    </button>
+    <button
+      class="btn btn-confirm"
+      (click)="onConfirm(); $event.stopPropagation()"
+    >
+      Oui
+    </button>
   </div>
 </div>

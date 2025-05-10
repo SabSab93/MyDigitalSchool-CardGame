@@ -10,11 +10,9 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean {
     const token = localStorage.getItem('authToken');
     if (token) {
-      // Optionnel : décoder et vérifier l'expiration du token ici
       return true;
     }
 
-    // Pas de token valide : redirection vers la page de connexion
     this.router.navigate(['/']);
     return false;
   }

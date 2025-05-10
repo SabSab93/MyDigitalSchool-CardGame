@@ -1,4 +1,3 @@
-/* src/app/components/deck/edit-deck-panel/edit-deck-panel.component.scss */
 :host { display: block; }
 
 .panel {
@@ -16,13 +15,13 @@
   background: none; border: none; cursor: pointer;
 }
 
-/* résumé */
+
 .summary {
   margin-bottom: 1rem;
   font-weight: bold;
 }
 
-/* Listes */
+
 .cards-current ul,
 .cards-available ul {
   list-style: none; padding: 0; margin: .5rem 0;
@@ -42,7 +41,6 @@
   flex: 1;
 }
 
-/* icônes + / – */
 .minus {
   color: #d81b60;
   cursor: pointer;
@@ -56,7 +54,7 @@
   }
 }
 
-/* zone nom + bouton */
+
 .actions {
   margin-top: 1rem;
   label {

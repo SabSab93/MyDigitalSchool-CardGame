@@ -1,22 +1,19 @@
 .edit-deck-container {
   display: flex;
   gap: 1rem;
-  height: 80vh;        /* pour que la scrollbar du modal gère le reste */
+  height: 80vh;        
 }
 
-/* Colonne où la liste peut défiler */
 .list-container {
   flex: 1 1 auto;
   overflow-y: auto;
   padding-right: .5rem;
 }
 
-/* Item sélectionné */
 .choices li.selected {
   background: rgba(149,125,173,0.2);
 }
 
-/* Styles généraux */
 .dialog-text {
   font-family: 'Courier New', monospace;
   font-size: 1.1rem;

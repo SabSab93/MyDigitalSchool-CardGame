@@ -1,47 +1,104 @@
-// src/app/play/play.component.ts
 import { Component, OnInit } from '@angular/core';
-import { CommonModule }      from '@angular/common';
-import { ActivatedRoute, RouterModule }    from '@angular/router';
-import { DeckWithCardsModel } from '../../../types/deckModel-type';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+
+import { CardModel } from '../../../types/cardModel-type';
 import { DeckService } from '../../../services/deck/deck.service';
+import { AppPlayModalComponent } from '../app-play-modal/app-play-modal.component';
+import { GameService, GameState } from '../../../services/game-service/game-service';
 
 @Component({
   selector: 'app-play',
   standalone: true,
-  imports: [ CommonModule, RouterModule],   // ← On importe CommonModule pour NgIf, JsonPipe…
-  template: `
-    <ng-container *ngIf="deck; else loading">
-      <div class="play-container">
-        <h2>Jeu – Deck : {{ deck.name }}</h2>
-        <pre>Cartes : {{ deck.cards | json }}</pre>
-        <!-- TODO : lancez ici le début de la partie -->
-      </div>
-    </ng-container>
-    <ng-template #loading>
-      <p>Chargement du deck…</p>
-    </ng-template>
-  `,
-  styles: [`
-    .play-container {
-      padding: 1rem;
-      font-family: monospace;
-    }
-  `]
+  imports: [CommonModule, AppPlayModalComponent, RouterModule],
+  templateUrl: './play.component.html',
+  styleUrls: ['./play.component.scss']
 })
 export class PlayComponent implements OnInit {
-  deck?: DeckWithCardsModel;
+  currentRound = 1;
+  maxRounds = 0;
+  userScore = 0;
+  opponentScore = 0;
+  cards: CardModel[] = [];
+
+  chosenCard?: CardModel;
+  showConfirmation = false;
+  showModal = false;
+  flipped = false;
+  opponentCard?: CardModel;
+  showResult = false;
+  resultMessage = '';
 
   constructor(
     private route: ActivatedRoute,
-    private deckService: DeckService
+    private deckService: DeckService,
+    private gameService: GameService
   ) {}
 
   ngOnInit() {
-    const deckId = this.route.snapshot.paramMap.get('deckId');
-    if (deckId) {
-      this.deckService.getAllDecks().subscribe(decks => {
-        this.deck = decks.find(d => d.id === deckId);
-      });
+    this.gameService.game$.subscribe((s: GameState) => {
+      this.currentRound  = s.currentRound;
+      this.maxRounds     = s.maxRounds;
+      this.userScore     = s.userScore;
+      this.opponentScore = s.opponentScore;
+      this.cards         = s.userDeck;
+      this.showModal     = false;
+      this.flipped       = false;
+      this.showResult    = false;
+    });
+
+
+    const deckId = this.route.snapshot.paramMap.get('deckId')!;
+    this.deckService.getAllDecks().subscribe(decks => {
+      const deck = decks.find(d => d.id === deckId);
+      if (deck) {
+        this.gameService.initGame(deck.cards);
+      }
+    });
+  }
+
+  chooseCard(c: CardModel) {
+    if (this.chosenCard) return;
+    this.chosenCard = c;
+    this.showConfirmation = true;
+  }
+
+  confirmChoice() {
+    if (!this.chosenCard) return;
+    this.showConfirmation = false;
+    const { opponentCard, result } = this.gameService.playTurn(this.chosenCard);
+    this.opponentCard  = opponentCard;
+    this.resultMessage = result;
+    this.showModal     = true;
+    this.animateBattle();
+  }
+
+  private animateBattle() {
+    this.flipped = false;
+    setTimeout(() => {
+      this.flipped = true;
+      setTimeout(() => this.showResult = true, 500);
+    }, 100);
+  }
+
+  closeBattle() {
+    this.showResult     = false;
+    this.chosenCard     = undefined;
+    this.showModal      = false;
+    this.flipped        = false;
+  }
+
+  cancelChoice() {
+    this.chosenCard = undefined;
+    this.showConfirmation = false;
+  }
+
+  onDialogClick() {
+    if (this.showConfirmation) return;
+    if (this.chosenCard && !this.showModal) {
+      this.confirmChoice();
+    } else if (this.showResult) {
+      this.closeBattle();
     }
   }
 }

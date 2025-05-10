@@ -1,4 +1,3 @@
-// src/app/components/deck/edit-deck-panel/edit-deck-panel.component.ts
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule }      from '@angular/common';
 import { FormsModule }       from '@angular/forms';
@@ -13,7 +12,7 @@ import { CardService }        from '../../../services/card/card.service';
 @Component({
   selector: 'app-edit-deck-panel',
   standalone: true,
-  imports: [ CommonModule, FormsModule, FontAwesomeModule ],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   templateUrl: './edit-deck-panel.component.html',
   styleUrls: ['./edit-deck-panel.component.scss']
 })
@@ -35,20 +34,21 @@ export class EditDeckPanelComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.deckName = this.deck.name;
+    this.deckName      = this.deck.name;
     this.selectedCards = [...this.deck.cards];
     this.cardService.getAllCards().subscribe(c => this.allCards = c);
   }
 
-  /** Nombre de cartes sélectionnées */
+
   getCardCount(): number {
     return this.selectedCards.length;
   }
 
-  /** Valeur totale du deck en cours d’édition */
+
   getDeckValue(): number {
     return this.selectedCards.reduce((s, c) => s + (c.value||0), 0);
   }
+
 
   add(card: CardModel) {
     if (this.canAdd(card)) {
@@ -56,11 +56,12 @@ export class EditDeckPanelComponent implements OnInit {
     }
   }
 
+
   remove(card: CardModel) {
     this.selectedCards = this.selectedCards.filter(x => x.id !== card.id);
   }
 
-  /** Peut-on ajouter cette carte ? */
+
   canAdd(card: CardModel): boolean {
     return (
       this.getCardCount() < 5 &&
@@ -69,22 +70,25 @@ export class EditDeckPanelComponent implements OnInit {
     );
   }
 
-  /** Peut-on valider ? */
+
   canValidate(): boolean {
     return (
       this.deckName.trim().length > 0 &&
-      this.getCardCount() <= 5 &&
+      this.getCardCount() === 5 &&
       this.getDeckValue() <= 30
     );
   }
 
   save() {
-    if (!this.deck.id) return;
+    if (!this.deck.id || !this.canValidate()) return;
     const payload = {
       id:    this.deck.id,
-      name:  this.deckName,
+      name:  this.deckName.trim(),
       cards: this.selectedCards.map(c => c.id)
     };
-    this.deckService.updateDeck(payload).subscribe(() => this.close.emit());
+    this.deckService.updateDeck(payload).subscribe({
+      next: () => this.close.emit(),
+      error: err => console.error('Erreur update deck:', err)
+    });
   }
 }

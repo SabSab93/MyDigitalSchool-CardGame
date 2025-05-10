@@ -1,0 +1,15 @@
+.deck-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  .deck-item {
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .deck-item:hover {
+    background: rgba(149, 125, 173, 0.2);
+  }
+  

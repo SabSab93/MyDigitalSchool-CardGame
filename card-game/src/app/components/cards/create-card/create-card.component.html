@@ -1,25 +1,36 @@
 <div class="view-cards-container">
-    <!-- Formulaire à gauche -->
-    <div class="list-container">
-      <p class="dialog-text">Créer une nouvelle carte :</p>
-      <form (ngSubmit)="onSubmit()" #cardForm="ngForm">
-        <div class="form-group">
-          <label for="name">Nom de la carte</label><br/>
-          <input id="name" name="name" required [(ngModel)]="name" />
-        </div>
-        <div class="form-group">
-          <label for="value">Valeur</label><br/>
-          <input id="value" name="value" type="number" required [(ngModel)]="value" />
-        </div>
-        <button type="submit" [disabled]="!cardForm.form.valid">Créer</button>
-      </form>
-    </div>
-  
-    <!-- Aperçu à droite -->
-    <app-show-card
+  <div class="list-container">
+    <p class="dialog-text">Créer une nouvelle carte :</p>
+    <form (ngSubmit)="onSubmit()" #cardForm="ngForm">
+      <div class="form-group">
+        <label for="name">Nom de la carte</label><br/>
+        <input
+          id="name"
+          name="name"
+          required
+          [(ngModel)]="name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="value">Valeur (0–20)</label><br/>
+        <input
+          id="value"
+          name="value"
+          type="number"
+          required
+          min="0"
+          max="20"
+          [(ngModel)]="value"
+        />
+      </div>
+      <!-- Désactivé si form invalide ou valeur hors plage via HTML5 -->
+      <button type="submit" [disabled]="!cardForm.form.valid">Créer</button>
+    </form>
+  </div>
+
+  <app-show-card
     *ngIf="selectedCard"
     [selectedCard]="selectedCard"
     [selectedDescription]="selectedDescription"
   />
-  </div>
-  
+</div>

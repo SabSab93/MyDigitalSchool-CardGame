@@ -197,10 +197,6 @@ export class HomeCardComponent implements OnInit, OnDestroy {
     this.sound.currentTime = 0;
   }
   startGame(deck: DeckWithCardsModel) {
-    // 1) Ferme le modal
     this.closeModal();
-    // 2) Ici, remplacez par votre logique de démarrage :
-    console.log('On démarre la partie avec le deck', deck);
-    // Par exemple : this.gameService.init(deck);
   }
 }

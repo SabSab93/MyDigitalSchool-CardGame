@@ -1,26 +1,32 @@
 <div class="delete-decks-container">
-    <div class="list-container">
-        <p class="dialog-text">Voici les decks disponibles :</p>
-        <ul class="choices">
-          <li *ngFor="let deck of decks" (click)="selectDeck(deck)">
-            <span class="arrow">➤</span>
-            <span class="label">{{ deck.name }}</span>
-            <div class="stats">
-              Cartes : {{ deck.cards.length }}/5 |
-              Valeur : {{ getTotalValue(deck) }}/30
-            </div>
-          </li>
-        </ul>
-      </div>
+  <div class="list-container">
+    <p class="dialog-text">Voici les decks disponibles :</p>
+    <ul class="choices">
+      <li
+        *ngFor="let deck of decks"
+        (click)="selectDeck(deck)"
+        [class.selected]="deck === selectedDeck"
+      >
+        <span class="arrow">➤</span>
+        <span class="label">{{ deck.name }}</span>
+        <div class="stats">
+          Cartes : {{ deck.cards.length }}/5 |
+          Valeur : {{ getTotalValue(deck) }}/30
+        </div>
+      </li>
+    </ul>
   </div>
-  
-  <!-- Modal de confirmation -->
-  <app-delete-deck-modal
+</div>
+
+
+<div
+  class="modal-overlay"
+  *ngIf="isModalVisible && selectedDeck"
+  (click)="onCancel()"
+></div>
+<app-delete-deck-modal
   *ngIf="isModalVisible && selectedDeck"
   [selectedDeck]="selectedDeck"
   (cancel)="onCancel()"
   (confirm)="onConfirmDelete()"
 ></app-delete-deck-modal>
-<div class="modal-overlay" *ngIf="isModalVisible && selectedDeck" (click)="onCancel()"></div>
-  
-  

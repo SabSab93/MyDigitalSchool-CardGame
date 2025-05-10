@@ -2,15 +2,15 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;    /* centre image et description */
-  width: 20rem;           /* largeur fixe de la “carte” */
-  margin: 0 auto;         /* centre .preview-container dans son parent */
+  align-items: center;   
+  width: 20rem;        
+  margin: 0 auto;         
   text-align: center;
 
 
   .card-image {
-    width: 100%;            /* prend 100% de la largeur du parent */
-    height: auto;           /* garde les proportions */
+    width: 100%;            
+    height: auto;           
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     margin-bottom: 1rem;

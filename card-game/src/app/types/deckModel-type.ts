@@ -1,6 +1,6 @@
 import { CardModel } from "./cardModel-type";
 
-//Read Only
+
 export interface DeckWithCardsModel {
     id: string | undefined;     
     name: string;               
