@@ -1,4 +1,3 @@
-// src/app/components/create-deck/create-deck.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -38,10 +37,8 @@ export class CreateDeckComponent implements OnInit {
   toggleCardSelection(card: CardModel) {
     const index = this.selectedCards.findIndex(c => c.id === card.id);
     if (index > -1) {
-      // désélection
       this.selectedCards.splice(index, 1);
     } else if (this.selectedCards.length < 5 && this.totalValue + card.value <= 30) {
-      // sélection si <5 cartes et valeur totale ≤ 30
       this.selectedCards.push(card);
     }
   }
@@ -54,11 +51,6 @@ export class CreateDeckComponent implements OnInit {
     return this.selectedCards.some(c => c.id === card.id);
   }
 
-  /** Un deck est valide si :
-   *  - il a un nom non vide
-   *  - exactement 5 cartes sélectionnées
-   *  - valeur totale ≤ 30
-   */
   isDeckValid(): boolean {
     return (
       this.deckName.trim().length > 0 &&
@@ -96,7 +88,6 @@ export class CreateDeckComponent implements OnInit {
   private resetForm() {
     this.selectedCards = [];
     this.deckName = '';
-    // recharge la liste des cartes
     this.cardService.getAllCards().subscribe({
       next: data => this.cards = data,
       error: err => console.error('Erreur chargement cartes:', err)

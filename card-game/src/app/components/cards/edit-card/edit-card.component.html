@@ -1,6 +1,5 @@
-<!-- edit-card.component.html -->
 <div class="view-cards-container">
-  <!-- Colonne de gauche : la liste cliquable -->
+  
   <div class="list-container">
     <p class="dialog-text">Sélectionnez une carte à modifier :</p>
     <ul class="choices">
@@ -15,7 +14,7 @@
     </ul>
   </div>
 
-  <!-- Colonne de droite : formulaire + aperçu -->
+
   <div class="preview-container" *ngIf="selectedCard">
     <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="edit-form">
       <div class="form-group">
@@ -37,7 +36,7 @@
           [(ngModel)]="selectedCard.value"
         />
       </div>
-      <!-- bouton désactivé si form invalide OU valeur hors plage -->
+
       <button
         type="submit"
         [disabled]="
@@ -50,7 +49,6 @@
       </button>
     </form>
 
-    <!-- === Le modal s'affiche uniquement APRÈS la mise à jour === -->
     <app-show-card
       *ngIf="isModalVisible && isCardUpdated && selectedCard"
       [selectedCard]="selectedCard"

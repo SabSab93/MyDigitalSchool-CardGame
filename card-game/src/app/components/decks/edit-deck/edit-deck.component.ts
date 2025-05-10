@@ -7,14 +7,13 @@ import { DeckWithCardsModel } from '../../../types/deckModel-type';
 import { DeckService }        from '../../../services/deck/deck.service';
 import { EditDeckPanelComponent } from '../edit-deck-panel/edit-deck-panel.component';
 
-
 @Component({
   selector: 'app-edit-deck',
   standalone: true,
   imports: [
     CommonModule,
     FontAwesomeModule,
-    EditDeckPanelComponent    // ← on importe le panel ici
+    EditDeckPanelComponent 
   ],
   templateUrl: './edit-deck.component.html',
   styleUrls: ['./edit-deck.component.scss']

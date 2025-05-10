@@ -12,15 +12,9 @@ import { DeckWithCardsModel } from '../../types/deckModel-type';
   styleUrls: ['./delete-deck-modal.component.scss']
 })
 export class DeleteDeckModalComponent {
-  /** Deck sélectionné à supprimer */
   @Input() selectedDeck: DeckWithCardsModel | null = null;
-
- 
   @Output() confirm = new EventEmitter<void>();
-
-
   @Output() cancel  = new EventEmitter<void>();
-
 
   onCancel() {
     this.cancel.emit();

@@ -30,7 +30,6 @@ export class CreateCardComponent {
     this.cardService.createCard({ name: this.name, value: this.value }).subscribe({
       next: (card) => {
         this.selectedCard = card;
-        // placeholder description de 50 caractères
         this.selectedDescription = 
           "Une carte exceptionnelle imprégnée de magie ancienne.";
       },

@@ -27,12 +27,10 @@ export class GameService {
   };
   private state$ = new BehaviorSubject<GameState>({ ...this.state });
 
-  /** Observable pour que le composant s’y abonne */
   get game$(): Observable<GameState> {
     return this.state$.asObservable();
   }
 
-  /** Initialise les decks */
   initGame(userCards: CardModel[]) {
     this.state = {
       ...this.state,
@@ -47,7 +45,6 @@ export class GameService {
     this.state$.next(this.state);
   }
 
-  /** Logic de génération du deck adverse */
   private generateOpponentDeck(): CardModel[] {
     let remaining = 30;
     const count = 5;
@@ -64,16 +61,14 @@ export class GameService {
     return deck;
   }
 
-  /** Exécute un tour de jeu, retourne la nouvelle paire de cartes et le message résultat */
+
   playTurn(userCard: CardModel): { opponentCard: CardModel; result: string } {
-    // retire la carte utilisateur
     const userDeck = this.state.userDeck.filter(c => c.id !== userCard.id);
-    // adversaire choisit et retire
     const oppDeck = [...this.state.opponentDeck];
     const idx = Math.floor(Math.random() * oppDeck.length);
     const oppCard = oppDeck.splice(idx, 1)[0];
 
-    // calcule le résultat
+
     let message = '';
     if (userCard.value > oppCard.value) {
       this.state.userScore++;
@@ -85,7 +80,7 @@ export class GameService {
       message = 'Égalité ce tour ! 🤝';
     }
 
-    // met à jour l’état
+  
     const nextRound = this.state.currentRound + 1;
     const finished = nextRound > this.state.maxRounds || userDeck.length === 0 || oppDeck.length === 0;
     let finalMsg = message;

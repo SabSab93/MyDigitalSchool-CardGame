@@ -5,7 +5,6 @@
   justify-content: flex-start;
   align-items: flex-start;
   padding: 1rem;
-  /* z-index abaissé : l’overlay (250) + contenu (400) sont gérés côté parent */
   z-index: 250;
 }
 
@@ -26,7 +25,7 @@
   max-height: 85vh;
   overflow-y: auto;
   border-radius: 16px;
-  z-index: 400;      /* au‑dessus de l’overlay mais sous la bulle si besoin */
+  z-index: 400;     
 }
 
 .close-btn {

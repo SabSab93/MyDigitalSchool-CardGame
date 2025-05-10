@@ -1,15 +1,14 @@
-/* Reprend la class card-modal pour tous les modals */
 .preview-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;    /* centre image et description */
-  width: 20rem;           /* largeur fixe de la “carte” */
-  margin: 0 auto;         /* centre .preview-container dans son parent */
+  align-items: center;   
+  width: 20rem;           
+  margin: 0 auto;         
   text-align: center;
   }
   
-  /* Spécifique au show-deck-modal */
+
   .show-deck-modal {
     h2 {
       font-family: 'Courier New', monospace;

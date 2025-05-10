@@ -1,4 +1,3 @@
-// src/app/components/deck/edit-deck-panel/edit-deck-panel.component.ts
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule }      from '@angular/common';
 import { FormsModule }       from '@angular/forms';
@@ -35,35 +34,34 @@ export class EditDeckPanelComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Initialisation du formulaire
     this.deckName      = this.deck.name;
     this.selectedCards = [...this.deck.cards];
     this.cardService.getAllCards().subscribe(c => this.allCards = c);
   }
 
-  /** Nombre de cartes sélectionnées */
+
   getCardCount(): number {
     return this.selectedCards.length;
   }
 
-  /** Valeur totale du deck en cours d’édition */
+
   getDeckValue(): number {
     return this.selectedCards.reduce((s, c) => s + (c.value||0), 0);
   }
 
-  /** Ajoute une carte si possible */
+
   add(card: CardModel) {
     if (this.canAdd(card)) {
       this.selectedCards.push(card);
     }
   }
 
-  /** Retire une carte sélectionnée */
+
   remove(card: CardModel) {
     this.selectedCards = this.selectedCards.filter(x => x.id !== card.id);
   }
 
-  /** Peut-on ajouter cette carte ? */
+
   canAdd(card: CardModel): boolean {
     return (
       this.getCardCount() < 5 &&
@@ -72,12 +70,7 @@ export class EditDeckPanelComponent implements OnInit {
     );
   }
 
-  /**
-   * Valider n’est autorisé que si :
-   * - nom du deck non vide
-   * - exactement 5 cartes
-   * - valeur totale ≤ 30
-   */
+
   canValidate(): boolean {
     return (
       this.deckName.trim().length > 0 &&
@@ -86,7 +79,6 @@ export class EditDeckPanelComponent implements OnInit {
     );
   }
 
-  /** Envoi de la mise à jour si le deck est valide */
   save() {
     if (!this.deck.id || !this.canValidate()) return;
     const payload = {

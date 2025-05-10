@@ -1,4 +1,3 @@
-/* delete-deck-modal.component.scss */
 .delete-deck-modal {
   position: fixed;
   top: 50%;
@@ -8,7 +7,7 @@
   padding: 1.5rem;
   border-radius: 12px;
   text-align: center;
-  z-index: 1001; /* au-dessus de l’overlay */
+  z-index: 1001; 
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
   .buttons {

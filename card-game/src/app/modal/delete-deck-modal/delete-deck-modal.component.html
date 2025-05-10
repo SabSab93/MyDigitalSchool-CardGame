@@ -1,8 +1,6 @@
-<!-- delete-deck-modal.component.html -->
 <div class="delete-deck-modal" (click)="$event.stopPropagation()">
   <h2>Confirmer la suppression</h2>
 
-  <!-- Preview du deck à supprimer -->
   <app-show-deck-modal
     *ngIf="selectedDeck"
     [deck]="selectedDeck"

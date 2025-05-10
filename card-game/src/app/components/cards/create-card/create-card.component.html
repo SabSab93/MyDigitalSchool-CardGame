@@ -1,6 +1,4 @@
-<!-- create-card.component.html -->
 <div class="view-cards-container">
-  <!-- Formulaire à gauche -->
   <div class="list-container">
     <p class="dialog-text">Créer une nouvelle carte :</p>
     <form (ngSubmit)="onSubmit()" #cardForm="ngForm">
@@ -30,7 +28,6 @@
     </form>
   </div>
 
-  <!-- Aperçu à droite -->
   <app-show-card
     *ngIf="selectedCard"
     [selectedCard]="selectedCard"

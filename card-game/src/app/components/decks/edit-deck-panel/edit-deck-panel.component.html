@@ -1,17 +1,16 @@
-<!-- src/app/components/deck/edit-deck-panel/edit-deck-panel.component.html -->
 <div class="panel">
-  <!-- fermer -->
+
   <button class="close-btn" (click)="close.emit()">
     <fa-icon [icon]="faTimes"></fa-icon>
   </button>
 
-  <!-- titre et résumé -->
+
   <h3>Modifier « {{ deck.name }} »</h3>
   <div class="summary">
     {{ getCardCount() }} / 5 cartes — Valeur : {{ getDeckValue() }} / 30
   </div>
 
-  <!-- cartes actuelles -->
+
   <section class="cards-current">
     <h4>Cartes actuelles :</h4>
     <ul>
@@ -26,7 +25,7 @@
     </ul>
   </section>
 
-  <!-- cartes disponibles -->
+
   <section class="cards-available">
     <h4>Ajouter des cartes :</h4>
     <ul>
@@ -42,7 +41,7 @@
     </ul>
   </section>
 
-  <!-- actions -->
+
   <div class="actions">
     <label for="deck-name">Nom du deck :</label>
     <input

@@ -44,6 +44,4 @@ export class ViewCardsComponent implements OnInit {
     this.selectedCard = card;
     this.selectedDescription = "Carte dotée d'un pouvoir ancien et mystérieux!";
   }
-
-
 }

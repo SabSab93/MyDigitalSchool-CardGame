@@ -13,7 +13,7 @@ interface DeckBasic {
 
 interface CreateDeckPayload {
   name: string;
-  cards: string[]; // tableau d'ID de cartes
+  cards: string[]; 
 }
 
 @Injectable({ providedIn: 'root' })
@@ -57,7 +57,6 @@ export class DeckService {
     );
   }
 
-  /** Crée un nouveau deck */
   createDeck(deck: { name: string; cards: string[] }): Observable<DeckModel> {
     return this.http.put<DeckModel>(this.apiUrl, deck);
   }

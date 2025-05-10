@@ -1,4 +1,3 @@
-<!-- src/app/components/create-deck/create-deck.component.html -->
 <div class="create-deck-container">
   <h2 class="title">Créer un nouveau deck</h2>
 
@@ -27,7 +26,6 @@
     Valeur : {{ totalValue }}/30
   </p>
 
-  <!-- Bouton visible et actif seulement si le deck est valide -->
   <button
     *ngIf="isDeckValid()"
     (click)="createDeck()"
@@ -35,8 +33,7 @@
   >
     Créer deck
   </button>
-
-  <!-- Modal d'affichage du deck créé -->
+  
   <app-show-deck-modal
     *ngIf="showModal && createdDeck"
     [deck]="createdDeck"

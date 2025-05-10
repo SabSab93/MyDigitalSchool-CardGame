@@ -39,7 +39,6 @@ export class DeleteCardComponent implements OnInit {
     if (!this.selectedCard) return;
     this.cardService.deleteCard(this.selectedCard).subscribe({
       next: () => {
-        // retire la carte deleted de la liste
         this.cards = this.cards.filter(c => c.id !== this.selectedCard!.id);
         this.onCancel();
       },

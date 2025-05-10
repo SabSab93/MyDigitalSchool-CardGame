@@ -1,7 +1,6 @@
 <div class="delete-modal card-modal" (click)="$event.stopPropagation()">
   <h2>Confirmer la suppression</h2>
 
-  <!-- aperçu de la carte -->
   <app-show-card
     *ngIf="card"
     [selectedCard]="card"

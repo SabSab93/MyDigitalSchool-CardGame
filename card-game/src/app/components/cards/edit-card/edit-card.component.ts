@@ -1,4 +1,3 @@
-// edit-card.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +36,6 @@ export class EditCardComponent implements OnInit {
   }
 
   selectCard(card: CardModel) {
-    // clone pour ne pas modifier la liste avant validation
     this.selectedCard = { ...card };
     this.selectedDescription = "Description temporaire de la carte.";
     this.isCardUpdated = false;
@@ -56,7 +54,6 @@ export class EditCardComponent implements OnInit {
 
     this.cardService.updateCard(this.selectedCard).subscribe({
       next: updated => {
-        // mise à jour de la liste
         const idx = this.cards.findIndex(c => c.id === updated.id);
         if (idx > -1) this.cards[idx] = updated;
         this.selectedCard = updated;
@@ -70,7 +67,6 @@ export class EditCardComponent implements OnInit {
   openModal() { this.isModalVisible = true; }
   closeModal() { this.isModalVisible = false; }
   cancelEdit() {
-    // si besoin de bouton "Annuler", réinitialiser le clone
     if (this.selectedCard) {
       const original = this.cards.find(c => c.id === this.selectedCard!.id);
       if (original) this.selectedCard = { ...original };

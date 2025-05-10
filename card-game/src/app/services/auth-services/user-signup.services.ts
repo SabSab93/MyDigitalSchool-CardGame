@@ -50,7 +50,6 @@ export class UserSignUpService {
     });
   }
 
-  // Méthode pour capter les erreurs
   handleError(err: any): string {
     if (err.status === 404) {
       return 'Service non disponible. Veuillez réessayer plus tard.';

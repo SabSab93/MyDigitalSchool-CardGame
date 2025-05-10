@@ -16,14 +16,12 @@ export class CardService {
 
   constructor(private http: HttpClient) {}
 
-  /** Récupère d’abord id+name, puis pour chaque id la carte complète (avec value) */
   getAllCards(): Observable<CardModel[]> {
     return this.http.get<CardBasic[]>(this.apiUrl).pipe(
       switchMap((basics) => {
         if (!basics || basics.length === 0) {
           return of([]);
         }
-        // Pour chaque basic, on fait une requête GET /api/cards/:id
         const calls = basics.map(b =>
           this.http.get<CardModel>(`${this.apiUrl}/${b.id}`)
         );
