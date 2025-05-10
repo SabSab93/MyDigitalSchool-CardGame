@@ -1,3 +1,4 @@
+// src/app/components/play/play-game/play.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -42,11 +43,14 @@ export class PlayComponent implements OnInit {
       this.userScore     = s.userScore;
       this.opponentScore = s.opponentScore;
       this.cards         = s.userDeck;
-      this.showModal     = false;
-      this.flipped       = false;
-      this.showResult    = false;
-    });
 
+      // si on vient de fermer la modale, on reset l’animation
+      if (!s.finished) {
+        this.showModal  = false;
+        this.flipped    = false;
+        this.showResult = false;
+      }
+    });
 
     const deckId = this.route.snapshot.paramMap.get('deckId')!;
     this.deckService.getAllDecks().subscribe(decks => {
@@ -66,18 +70,28 @@ export class PlayComponent implements OnInit {
   confirmChoice() {
     if (!this.chosenCard) return;
     this.showConfirmation = false;
-    const { opponentCard, result } = this.gameService.playTurn(this.chosenCard);
+
+
+    const { opponentCard, resultMessage, finished } =
+      this.gameService.playTurn(this.chosenCard);
+
     this.opponentCard  = opponentCard;
-    this.resultMessage = result;
+    this.resultMessage = resultMessage;
     this.showModal     = true;
-    this.animateBattle();
+    this.animateBattle(finished);
   }
 
-  private animateBattle() {
+  private animateBattle(finished: boolean = false) {
     this.flipped = false;
     setTimeout(() => {
       this.flipped = true;
-      setTimeout(() => this.showResult = true, 500);
+      setTimeout(() => {
+        this.showResult = true;
+
+        if (finished) {
+
+        }
+      }, 500);
     }, 100);
   }
 

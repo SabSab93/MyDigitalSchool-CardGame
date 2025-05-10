@@ -1,3 +1,4 @@
+// src/app/services/game-service/game-service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CardModel } from '../../types/cardModel-type';
@@ -56,19 +57,27 @@ export class GameService {
         ? remaining
         : Math.floor(Math.random() * (maxVal + 1));
       remaining -= val;
-      deck.push({ id: `opp-${i}`, name: `Opp ${i}`, value: val, imageUrl: `/assets/images/cards/card_${val}.png` });
+      deck.push({
+        id: `opp-${i}`,
+        name: `Opp ${i}`,
+        value: val,
+        imageUrl: `/assets/images/cards/card_${val}.png`
+      });
     }
     return deck;
   }
 
 
-  playTurn(userCard: CardModel): { opponentCard: CardModel; result: string } {
+  playTurn(
+    userCard: CardModel
+  ): { opponentCard: CardModel; resultMessage: string; finished: boolean } {
+
     const userDeck = this.state.userDeck.filter(c => c.id !== userCard.id);
     const oppDeck = [...this.state.opponentDeck];
     const idx = Math.floor(Math.random() * oppDeck.length);
     const oppCard = oppDeck.splice(idx, 1)[0];
 
-
+    // résultat du tour
     let message = '';
     if (userCard.value > oppCard.value) {
       this.state.userScore++;
@@ -80,18 +89,28 @@ export class GameService {
       message = 'Égalité ce tour ! 🤝';
     }
 
-  
     const nextRound = this.state.currentRound + 1;
-    const finished = nextRound > this.state.maxRounds || userDeck.length === 0 || oppDeck.length === 0;
+    const finished = 
+      nextRound > this.state.maxRounds ||
+      userDeck.length === 0 ||
+      oppDeck.length === 0;
+
     let finalMsg = message;
     if (finished) {
-      if (userDeck.length === 0) finalMsg = 'Tu n\'as plus de cartes. Tu as perdu 😭';
-      else if (oppDeck.length === 0) finalMsg = 'L\'adversaire n\'a plus de cartes. Tu as gagné 🏆';
-      else if (this.state.userScore > this.state.opponentScore) finalMsg = 'Bravo, tu remportes la partie ! 🏆';
-      else if (this.state.userScore < this.state.opponentScore) finalMsg = 'Dommage, l’adversaire gagne la partie. 😭';
-      else finalMsg = 'Match nul final. 🤝';
+      if (userDeck.length === 0) {
+        finalMsg = 'Tu n\'as plus de cartes. Tu as perdu 😭';
+      } else if (oppDeck.length === 0) {
+        finalMsg = 'L\'adversaire n\'a plus de cartes. Tu as gagné 🏆';
+      } else if (this.state.userScore > this.state.opponentScore) {
+        finalMsg = 'Bravo, tu remportes la partie ! 🏆';
+      } else if (this.state.userScore < this.state.opponentScore) {
+        finalMsg = 'Dommage, l’adversaire gagne la partie. 😭';
+      } else {
+        finalMsg = 'Match nul final. 🤝';
+      }
     }
 
+    // mise à jour de l’état
     this.state = {
       ...this.state,
       userDeck,
@@ -102,6 +121,10 @@ export class GameService {
     };
     this.state$.next(this.state);
 
-    return { opponentCard: oppCard, result: message };
+    return {
+      opponentCard: oppCard,
+      resultMessage: finalMsg,
+      finished
+    };
   }
 }
