@@ -1,6 +1,8 @@
+// src/app/components/create-deck/create-deck.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { CardService } from '../../../services/card/card.service';
 import { DeckService } from '../../../services/deck/deck.service';
 import { CardModel } from '../../../types/cardModel-type';
@@ -20,9 +22,11 @@ export class CreateDeckComponent implements OnInit {
   selectedCards: CardModel[] = [];
   createdDeck: DeckWithCardsModel | null = null;
   showModal = false;
-  showSuccessMessage = false; // Ajout de l'état pour afficher le message de succès
 
-  constructor(private cardService: CardService, private deckService: DeckService) {}
+  constructor(
+    private cardService: CardService,
+    private deckService: DeckService
+  ) {}
 
   ngOnInit(): void {
     this.cardService.getAllCards().subscribe({
@@ -34,8 +38,10 @@ export class CreateDeckComponent implements OnInit {
   toggleCardSelection(card: CardModel) {
     const index = this.selectedCards.findIndex(c => c.id === card.id);
     if (index > -1) {
+      // désélection
       this.selectedCards.splice(index, 1);
     } else if (this.selectedCards.length < 5 && this.totalValue + card.value <= 30) {
+      // sélection si <5 cartes et valeur totale ≤ 30
       this.selectedCards.push(card);
     }
   }
@@ -48,8 +54,17 @@ export class CreateDeckComponent implements OnInit {
     return this.selectedCards.some(c => c.id === card.id);
   }
 
+  /** Un deck est valide si :
+   *  - il a un nom non vide
+   *  - exactement 5 cartes sélectionnées
+   *  - valeur totale ≤ 30
+   */
   isDeckValid(): boolean {
-    return this.deckName.trim().length > 0 && this.selectedCards.length <= 5 && this.totalValue <= 30;
+    return (
+      this.deckName.trim().length > 0 &&
+      this.selectedCards.length === 5 &&
+      this.totalValue <= 30
+    );
   }
 
   createDeck() {
@@ -61,16 +76,15 @@ export class CreateDeckComponent implements OnInit {
     };
 
     this.deckService.createDeck(deckData).subscribe({
-      next: (createdDeck) => {
+      next: created => {
         this.createdDeck = {
-          ...createdDeck,
+          ...created,
           cards: this.selectedCards
         };
         this.showModal = true;
         this.resetForm();
-
       },
-      error: (err) => console.error('Erreur création deck :', err)
+      error: err => console.error('Erreur création deck :', err)
     });
   }
 
@@ -79,10 +93,10 @@ export class CreateDeckComponent implements OnInit {
     this.createdDeck = null;
   }
 
-  resetForm() {
+  private resetForm() {
     this.selectedCards = [];
     this.deckName = '';
-    // Rétablir la liste des cartes (en enlevant les cartes déjà utilisées)
+    // recharge la liste des cartes
     this.cardService.getAllCards().subscribe({
       next: data => this.cards = data,
       error: err => console.error('Erreur chargement cartes:', err)

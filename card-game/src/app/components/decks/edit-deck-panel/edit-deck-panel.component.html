@@ -1,56 +1,62 @@
 <!-- src/app/components/deck/edit-deck-panel/edit-deck-panel.component.html -->
 <div class="panel">
-    <!-- bouton fermer -->
-    <button class="close-btn" (click)="close.emit()">
-      <fa-icon [icon]="faTimes"></fa-icon>
-    </button>
-  
-    <!-- En-tête avec résumé cartes/valeur -->
-    <h3>Modifier « {{ deck.name }} »</h3>
-    <div class="summary">
-      {{ getCardCount() }} / 5 cartes —
-      Valeur : {{ getDeckValue() }} / 30
-    </div>
-  
-    <!-- Cartes actuelles -->
-    <section class="cards-current">
-      <h4>Cartes actuelles :</h4>
-      <ul>
-        <li *ngFor="let c of selectedCards">
-          <span class="card-name">{{ c.name }} ({{ c.value }})</span>
-          <fa-icon
-            class="minus"
-            [icon]="faMinus"
-            (click)="remove(c)"
-          ></fa-icon>
-        </li>
-      </ul>
-    </section>
-  
-    <!-- Cartes disponibles -->
-    <section class="cards-available">
-      <h4>Ajouter des cartes :</h4>
-      <ul>
-        <li *ngFor="let c of allCards">
-          <span class="card-name">{{ c.name }} ({{ c.value }})</span>
-          <fa-icon
-            class="plus"
-            [icon]="faPlus"
-            (click)="add(c)"
-            [class.disabled]="!canAdd(c)"
-          ></fa-icon>
-        </li>
-      </ul>
-    </section>
-  
-    <!-- Actions -->
-    <div class="actions">
-      <label for="deck-name">Nom du deck :</label>
-      <input id="deck-name" [(ngModel)]="deckName" />
-  
-      <button [disabled]="!canValidate()" (click)="save()">
-        Valider le deck
-      </button>
-    </div>
+  <!-- fermer -->
+  <button class="close-btn" (click)="close.emit()">
+    <fa-icon [icon]="faTimes"></fa-icon>
+  </button>
+
+  <!-- titre et résumé -->
+  <h3>Modifier « {{ deck.name }} »</h3>
+  <div class="summary">
+    {{ getCardCount() }} / 5 cartes — Valeur : {{ getDeckValue() }} / 30
   </div>
-  
+
+  <!-- cartes actuelles -->
+  <section class="cards-current">
+    <h4>Cartes actuelles :</h4>
+    <ul>
+      <li *ngFor="let c of selectedCards">
+        <span class="card-name">{{ c.name }} ({{ c.value }})</span>
+        <fa-icon
+          class="minus"
+          [icon]="faMinus"
+          (click)="remove(c)"
+        ></fa-icon>
+      </li>
+    </ul>
+  </section>
+
+  <!-- cartes disponibles -->
+  <section class="cards-available">
+    <h4>Ajouter des cartes :</h4>
+    <ul>
+      <li *ngFor="let c of allCards">
+        <span class="card-name">{{ c.name }} ({{ c.value }})</span>
+        <fa-icon
+          class="plus"
+          [icon]="faPlus"
+          (click)="add(c)"
+          [class.disabled]="!canAdd(c)"
+        ></fa-icon>
+      </li>
+    </ul>
+  </section>
+
+  <!-- actions -->
+  <div class="actions">
+    <label for="deck-name">Nom du deck :</label>
+    <input
+      id="deck-name"
+      [(ngModel)]="deckName"
+      placeholder="Nom du deck"
+    />
+
+    <button
+      (click)="save()"
+      [disabled]="!canValidate()"
+      class="save-btn"
+    >
+      Valider le deck
+    </button>
+  </div>
+</div>

@@ -13,7 +13,7 @@ import { CardService }        from '../../../services/card/card.service';
 @Component({
   selector: 'app-edit-deck-panel',
   standalone: true,
-  imports: [ CommonModule, FormsModule, FontAwesomeModule ],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   templateUrl: './edit-deck-panel.component.html',
   styleUrls: ['./edit-deck-panel.component.scss']
 })
@@ -35,7 +35,8 @@ export class EditDeckPanelComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.deckName = this.deck.name;
+    // Initialisation du formulaire
+    this.deckName      = this.deck.name;
     this.selectedCards = [...this.deck.cards];
     this.cardService.getAllCards().subscribe(c => this.allCards = c);
   }
@@ -50,12 +51,14 @@ export class EditDeckPanelComponent implements OnInit {
     return this.selectedCards.reduce((s, c) => s + (c.value||0), 0);
   }
 
+  /** Ajoute une carte si possible */
   add(card: CardModel) {
     if (this.canAdd(card)) {
       this.selectedCards.push(card);
     }
   }
 
+  /** Retire une carte sélectionnée */
   remove(card: CardModel) {
     this.selectedCards = this.selectedCards.filter(x => x.id !== card.id);
   }
@@ -69,22 +72,31 @@ export class EditDeckPanelComponent implements OnInit {
     );
   }
 
-  /** Peut-on valider ? */
+  /**
+   * Valider n’est autorisé que si :
+   * - nom du deck non vide
+   * - exactement 5 cartes
+   * - valeur totale ≤ 30
+   */
   canValidate(): boolean {
     return (
       this.deckName.trim().length > 0 &&
-      this.getCardCount() <= 5 &&
+      this.getCardCount() === 5 &&
       this.getDeckValue() <= 30
     );
   }
 
+  /** Envoi de la mise à jour si le deck est valide */
   save() {
-    if (!this.deck.id) return;
+    if (!this.deck.id || !this.canValidate()) return;
     const payload = {
       id:    this.deck.id,
-      name:  this.deckName,
+      name:  this.deckName.trim(),
       cards: this.selectedCards.map(c => c.id)
     };
-    this.deckService.updateDeck(payload).subscribe(() => this.close.emit());
+    this.deckService.updateDeck(payload).subscribe({
+      next: () => this.close.emit(),
+      error: err => console.error('Erreur update deck:', err)
+    });
   }
 }

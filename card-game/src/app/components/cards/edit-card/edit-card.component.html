@@ -1,3 +1,4 @@
+<!-- edit-card.component.html -->
 <div class="view-cards-container">
   <!-- Colonne de gauche : la liste cliquable -->
   <div class="list-container">
@@ -26,30 +27,41 @@
         />
       </div>
       <div class="form-group">
-        <label>Valeur</label>
+        <label>Valeur (0–20)</label>
         <input
           name="value"
           type="number"
           required
+          min="0"
+          max="20"
           [(ngModel)]="selectedCard.value"
         />
       </div>
-      <button type="submit" [disabled]="!editForm.form.valid">
+      <!-- bouton désactivé si form invalide OU valeur hors plage -->
+      <button
+        type="submit"
+        [disabled]="
+          !editForm.form.valid ||
+          selectedCard.value! < 0 ||
+          selectedCard.value! > 20
+        "
+      >
         Enregistrer
       </button>
     </form>
 
-
-<!-- === Le modal s'affiche uniquement APRÈS la mise à jour === -->
-<app-show-card
-  *ngIf="isModalVisible && isCardUpdated && selectedCard"
-  [selectedCard]="selectedCard"
-  [selectedDescription]="selectedDescription"
-  (click)="closeModal()"
-  class="card-modal"
-/>
-<div
-  class="modal-overlay"
-  *ngIf="isModalVisible && isCardUpdated"
-  (click)="closeModal()"
-></div>
+    <!-- === Le modal s'affiche uniquement APRÈS la mise à jour === -->
+    <app-show-card
+      *ngIf="isModalVisible && isCardUpdated && selectedCard"
+      [selectedCard]="selectedCard"
+      [selectedDescription]="selectedDescription"
+      (click)="closeModal()"
+      class="card-modal"
+    ></app-show-card>
+    <div
+      class="modal-overlay"
+      *ngIf="isModalVisible && isCardUpdated"
+      (click)="closeModal()"
+    ></div>
+  </div>
+</div>

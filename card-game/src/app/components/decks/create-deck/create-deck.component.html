@@ -1,10 +1,15 @@
+<!-- src/app/components/create-deck/create-deck.component.html -->
 <div class="create-deck-container">
   <h2 class="title">Créer un nouveau deck</h2>
 
   <label class="label">Nom du deck :</label>
-  <input [(ngModel)]="deckName" class="input" placeholder="Nom de ton deck"/>
+  <input
+    [(ngModel)]="deckName"
+    class="input"
+    placeholder="Nom de ton deck"
+  />
 
-  <p class="subtext">Sélectionnez les cartes</p>
+  <p class="subtext">Sélectionnez les cartes (exactement 5, valeur ≤ 30)</p>
 
   <ul class="choices">
     <li 
@@ -17,13 +22,19 @@
     </li>
   </ul>
 
-  <p class="summary">Cartes sélectionnées : {{ selectedCards.length }}/5 — Valeur : {{ totalValue }}/30</p>
+  <p class="summary">
+    Cartes sélectionnées : {{ selectedCards.length }}/5 —
+    Valeur : {{ totalValue }}/30
+  </p>
 
-  <button *ngIf="isDeckValid()" (click)="createDeck()" class="create-btn">
+  <!-- Bouton visible et actif seulement si le deck est valide -->
+  <button
+    *ngIf="isDeckValid()"
+    (click)="createDeck()"
+    class="create-btn"
+  >
     Créer deck
   </button>
-
-
 
   <!-- Modal d'affichage du deck créé -->
   <app-show-deck-modal
