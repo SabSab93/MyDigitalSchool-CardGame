@@ -1,18 +1,25 @@
 .delete-cards-container {
-    .choices {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .choices li {
-      cursor: pointer;
-      padding: 0.5rem;
-      border-bottom: 1px solid #eee;
-      transition: background 0.2s;
-    }
-    .choices li:hover,
-    .choices li.selected {
-      background: rgba(216, 27, 96, 0.1);
-    }
+  .choices {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
-  
+  .choices li {
+    cursor: pointer;
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+  }
+  .choices li:hover,
+  .choices li.selected {
+    background: rgba(216, 27, 96, 0.1);
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}

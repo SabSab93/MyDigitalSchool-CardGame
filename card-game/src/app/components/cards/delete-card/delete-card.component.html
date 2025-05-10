@@ -1,27 +1,28 @@
 <div class="delete-cards-container">
-    <p class="dialog-text">Sélectionnez une carte à supprimer :</p>
-    <ul class="choices">
-      <li
-        *ngFor="let card of cards"
-        (click)="selectCard(card)"
-        [class.selected]="card.id === selectedCard?.id"
-      >
-        <span class="arrow">➤</span>
-        <span class="label">{{ card.name }}</span>
-      </li>
-    </ul>
-  </div>
-  
-  <!-- Modal de confirmation -->
-  <app-delete-modal
-    *ngIf="isModalVisible && selectedCard"
-    [card]="selectedCard"
-    (cancel)="onCancel()"
-    (confirm)="onConfirmDelete()"
-  ></app-delete-modal>
-  <div
-    class="modal-overlay"
-    *ngIf="isModalVisible && selectedCard"
-    (click)="onCancel()"
-  ></div>
-  
+  <p class="dialog-text">Sélectionnez une carte à supprimer :</p>
+  <ul class="choices">
+    <li
+      *ngFor="let card of cards"
+      (click)="selectCard(card)"
+      [class.selected]="card.id === selectedCard?.id"
+    >
+      <span class="arrow">➤</span>
+      <span class="label">{{ card.name }}</span>
+    </li>
+  </ul>
+</div>
+
+<!-- 1) Overlay sous le modal -->
+<div
+  class="modal-overlay"
+  *ngIf="isModalVisible && selectedCard"
+  (click)="onCancel()"
+></div>
+
+<!-- 2) Modal au-dessus de l'overlay -->
+<app-delete-modal
+  *ngIf="isModalVisible && selectedCard"
+  [card]="selectedCard"
+  (cancel)="onCancel()"
+  (confirm)="onConfirmDelete()"
+></app-delete-modal>
