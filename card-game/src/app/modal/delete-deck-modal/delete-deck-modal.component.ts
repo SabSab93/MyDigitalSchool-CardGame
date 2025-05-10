@@ -1,3 +1,4 @@
+// src/app/modal/delete-deck-modal/delete-deck-modal.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ShowDeckModalComponent } from '../show-deck-modal/show-deck-modal.component';
@@ -11,12 +12,21 @@ import { DeckWithCardsModel } from '../../types/deckModel-type';
   styleUrls: ['./delete-deck-modal.component.scss']
 })
 export class DeleteDeckModalComponent {
+  /** Deck sélectionné à supprimer */
   @Input() selectedDeck: DeckWithCardsModel | null = null;
-  @Output() confirm = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
 
-  closeModal() {
-    this.cancel.emit();  // Ferme le modal
+ 
+  @Output() confirm = new EventEmitter<void>();
+
+
+  @Output() cancel  = new EventEmitter<void>();
+
+
+  onCancel() {
+    this.cancel.emit();
   }
 
+  onConfirm() {
+    this.confirm.emit();
+  }
 }
