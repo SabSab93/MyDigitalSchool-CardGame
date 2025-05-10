@@ -22,7 +22,10 @@ export class CreateCardComponent {
   constructor(private cardService: CardService) {}
 
   onSubmit(): void {
-    if (!this.name || this.value === null) return;
+    if (!this.name || this.value === null || this.value < 0 || this.value > 20) {
+      console.warn('Valeur invalide :', this.value);
+      return;
+    }
 
     this.cardService.createCard({ name: this.name, value: this.value }).subscribe({
       next: (card) => {

@@ -1,3 +1,4 @@
+<!-- src/app/components/play/play-game/play.component.html -->
 <div class="home-card-container play-wrapper" [class.modal-open]="showModal">
 
   <!-- Scène + perso -->
@@ -10,22 +11,20 @@
       class="character"
     />
   </div>
+
   <div class="scoreboard">
     <span>Tour {{ currentRound > maxRounds ? maxRounds : currentRound }} / {{ maxRounds }}</span>
     <span>Toi : {{ userScore }}</span>
     <span>Adversaire : {{ opponentScore }}</span>
   </div>
 
-  
   <div class="cards-grid">
     <div *ngFor="let c of cards" class="card" (click)="chooseCard(c)">
-      <img [src]="'/assets/images/cards/card_' + c.value + '.png'" class="card-img">
+      <img [src]="'/assets/images/cards/card_' + c.value + '.png'" class="card-img" />
       <div class="card-value">{{ c.value }}</div>
     </div>
   </div>
 
-
-  
   <div class="dialog-box" (click)="onDialogClick()">
     <div class="speaker-name">
       {{ showConfirmation ? 'Confirmation' : (chosenCard ? 'Adversaire' : 'Sélection') }}
@@ -34,8 +33,8 @@
       <ng-container *ngIf="!chosenCard">
         Sélectionne une carte
       </ng-container>
-      <ng-container *ngIf="chosenCard && !showConfirmation">
-        À mon tour !
+      <ng-container *ngIf="chosenCard && !showConfirmation && !showModal">
+        Clique pour révéler l’adversaire
       </ng-container>
       <ng-container *ngIf="showConfirmation">
         Êtes-vous sûr de vouloir choisir la carte  
@@ -43,7 +42,6 @@
       </ng-container>
     </p>
 
-    
     <ul class="choices" *ngIf="showConfirmation">
       <li (click)="confirmChoice(); $event.stopPropagation()">
         <span class="arrow">➤</span>
@@ -56,29 +54,22 @@
     </ul>
   </div>
 
-  <
   <app-play-modal *ngIf="showModal" (close)="closeBattle()">
     <div class="battle-modal">
-      
       <div class="card-view" [class.flipped]="flipped">
         <div class="card-sides">
           <div class="card-back">?</div>
           <div class="card-front">
-            <img
-              [src]="'/assets/images/cards/card_' + chosenCard?.value + '.png'"
-            />
+            <img [src]="'/assets/images/cards/card_' + chosenCard?.value + '.png'" />
             <div class="card-value">{{ chosenCard?.value }}</div>
           </div>
         </div>
       </div>
-     
       <div class="card-view opponent" [class.flipped]="flipped">
         <div class="card-sides">
           <div class="card-back">?</div>
           <div class="card-front">
-            <img
-              [src]="'/assets/images/cards/card_' + opponentCard?.value + '.png'"
-            />
+            <img [src]="'/assets/images/cards/card_' + opponentCard?.value + '.png'" />
             <div class="card-value">{{ opponentCard?.value }}</div>
           </div>
         </div>
